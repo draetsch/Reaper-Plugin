@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D2AAC0620554660B00DB518D"
                BuildableName = "reaper_ninjamloop.dylib"
-               BlueprintName = "reaper_ninjamloop"
-               ReferencedContainer = "container:reaper_ninjamloop.xcodeproj">
+               BlueprintName = "reaper_Ultraschall"
+               ReferencedContainer = "container:reaper_Ultraschall.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
