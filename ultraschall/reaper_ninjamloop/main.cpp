@@ -18,6 +18,8 @@
 #include <sstream>
 #include <string>
 #include <ctime>
+#include <vector>
+#include <iterator>
 //#include "reaper_plugin_functions.h"
 
 
@@ -33,6 +35,10 @@ bool (*SetMediaItemLength)(MediaItem* item, double length, bool refreshUI);
 bool (*SetProjectMarker3)(ReaProject* proj, int markrgnindexnumber, bool isrgn, double pos, double rgnend, const char* name, int color);
 int (*GetNumTracks)();
 void (*InsertTrackAtIndex)(int idx, bool wantDefaults);
+int (*AddProjectMarker2)(ReaProject* proj, bool isrgn, double pos, double rgnend, const char* name, int wantidx, int color);
+void (*UpdateArrange)();
+void (*UpdateTimeline)();
+
 
 int g_registered_command=0;
 int g_registered_command_01=1;
@@ -45,10 +51,14 @@ void (*GetProjectPath)(char *buf, int bufsz);
 gaccel_register_t acreg=
 {
   {FALT|FVIRTKEY,'5',0},
-  "Insert random NINJAM loop"
+  "Load chapter file"
 };
 
-
+gaccel_register_t acreg1=
+{
+    {FALT|FVIRTKEY,'5',0},
+    "Load shownote file"
+};
 
 HWND g_parent;
 
@@ -77,7 +87,7 @@ void readChapterFile(char* fileName, MediaTrack* track )
             SetMediaItemPosition(item, time, true);
             SetMediaItemLength(item, 10, true);
             GetSetMediaItemInfo(item, "P_NOTES", (void*)test->c_str());
-            SetProjectMarker3(0, markerindex, true, time, 10, chapterText.c_str(), 0);
+            AddProjectMarker2(0, false, time, 10, chapterText.c_str(), 0, 0xFFFF00);
         }
         markerindex++;
         
@@ -85,6 +95,79 @@ void readChapterFile(char* fileName, MediaTrack* track )
     
     infile.close();
     
+}
+
+void readShownoteFile(char* fileName, MediaTrack* track)
+{
+    
+    std::ifstream infile(fileName);
+    std::string line;
+    std::vector<std::string> lines;
+    int starttime = NULL;
+    int lastStartTime = NULL;
+    int maxlength = 30;
+    int length;
+    
+    // read until the Header ends
+    while (std::getline(infile, line))
+    {
+        if (strcmp(line.c_str(), "/HEADER") == 0) {
+            break;
+        }
+    }
+    
+    // Read all shownote lines into a vector to reverse
+    while (std::getline(infile, line)) {
+        
+        if(line.empty())
+            continue;
+        
+        lines.push_back(line);
+        
+    }
+    
+    // get first element to set starttime
+    std::string firstLine = lines.front();
+    std::string timeStamp = firstLine.substr(0, line.find(' ', 0));
+    starttime = std::stoi(timeStamp);
+    
+    
+    // Iterate over all shownotes and create the mediaitems
+    std::reverse(lines.begin(), lines.end());
+    for (std::vector<std::string>::iterator iter = lines.begin(); iter != lines.end(); ++iter) {
+        std::string timeStamp = iter->substr(0, iter->find(' ', 0));
+        std::string shownoteText = iter->substr(iter->find(' ', 0)+1, iter->length());
+        int time = std::stoi(timeStamp) - starttime;
+        
+        if(!lastStartTime)
+            length = maxlength;
+        else
+        {
+        
+            if (lastStartTime-time > maxlength) {
+                length = maxlength;
+            }
+            else
+            {
+                length = lastStartTime-time;
+            }
+        }
+        
+        MediaItem* item = AddMediaItemToTrack(track);
+        if(item)
+        {
+            SetMediaItemPosition(item, time, true);
+            SetMediaItemLength(item, length, true);
+            GetSetMediaItemInfo(item, "P_NOTES", (void*)shownoteText.c_str());
+        }
+        
+        lastStartTime = time;
+        
+    }
+    
+    
+    infile.close();
+
 }
 
 MediaTrack* getTrackByName(char* trackName)
@@ -129,9 +212,29 @@ void ImportChapters()
     if(GetUserFileNameForRead(selectedImportPath, "Load Chapter File", "mp4chaps"))
         readChapterFile(selectedImportPath, track);
     
-    free(chapterTrackName);
     free(selectedImportPath);
     
+}
+
+void ImportShowNotes()
+{
+    char* shownoteTrackName = "Shownotes";
+    char* selectedImportPath = new char[4096];
+    
+    MediaTrack* track = getTrackByName("Shownotes");
+    
+    if(!track)
+    {
+        InsertTrackAtIndex(0, true);
+        track = GetTrack(0,0);
+        GetSetMediaTrackInfo(track, "P_NAME", shownoteTrackName);
+    }
+    
+    
+    if(GetUserFileNameForRead(selectedImportPath, "Load Shownote File", "osf"))
+        readShownoteFile(selectedImportPath, track);
+    
+    free(selectedImportPath);
 }
 
 bool hookCommandProc(int command, int flag)
@@ -141,6 +244,15 @@ bool hookCommandProc(int command, int flag)
     ImportChapters();
     return true;
   }
+  if (g_registered_command_01 && command == g_registered_command_01)
+  {
+      ImportShowNotes();
+      return true;
+  }
+    
+    UpdateTimeline();
+    UpdateArrange();
+    
   return false;
 }
 
@@ -155,9 +267,6 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     if (rec->caller_version != REAPER_PLUGIN_VERSION || !rec->GetFunc)
       return 0;
 
-      
-      
-      
     #define IMPORT(x) if (!(*((void **)&x) = rec->GetFunc(#x))) return 0;
     IMPORT(GetSetMediaTrackInfo)
     IMPORT(GetSelectedMediaItem)
@@ -171,19 +280,23 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     IMPORT(SetProjectMarker3)
     IMPORT(GetNumTracks)
     IMPORT(InsertTrackAtIndex)
-      
-    *((void **)&InsertMedia) = rec->GetFunc("InsertMedia");
-    *((void **)&GetMainHwnd) = rec->GetFunc("GetMainHwnd");
-    *((void **)&GetProjectPath) = rec->GetFunc("GetProjectPath");
-    
+    IMPORT(InsertMedia)
+    IMPORT(GetMainHwnd)
+    IMPORT(GetProjectPath)
+    IMPORT(AddProjectMarker2)
+    IMPORT(UpdateArrange)
+    IMPORT(UpdateTimeline)
 
-    
-    if (!InsertMedia || !GetMainHwnd||!GetProjectPath) return 0;
-    acreg.accel.cmd = g_registered_command = rec->Register("command_id",(void*)"NINJAMLOOP");
+    acreg.accel.cmd = g_registered_command = rec->Register("command_id",(void*)"Load chapter file");
+    acreg1.accel.cmd = g_registered_command_01 = rec->Register("command_id",(void*)"Load shownote file");
 
     if (!g_registered_command) return 0; // failed getting a command id, fail!
+    if (!g_registered_command_01) return 0; // failed getting a command id, fail!
 
     rec->Register("gaccel",&acreg);
+    rec->Register("hookcommand",(void*)hookCommandProc);
+      
+    rec->Register("gaccel",&acreg1);
     rec->Register("hookcommand",(void*)hookCommandProc);
 
 
@@ -196,13 +309,21 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
 							 1
 #endif
 	  );
+      
     MENUITEMINFO mi={sizeof(MENUITEMINFO),};
     mi.fMask = MIIM_TYPE | MIIM_ID;
     mi.fType = MFT_STRING;
     mi.dwTypeData = "Import Ultraschall chapter file";
     mi.wID = g_registered_command;
     InsertMenuItem(hMenu, 11, TRUE, &mi);
-
+      
+    MENUITEMINFO mi2={sizeof(MENUITEMINFO),};
+    mi2.fMask = MIIM_TYPE | MIIM_ID;
+    mi2.fType = MFT_STRING;
+    mi2.dwTypeData = "Import Ultraschall shownote file";
+    mi2.wID = g_registered_command_01;
+    InsertMenuItem(hMenu, 12, TRUE, &mi2);
+    
     // our plugin registered, return success
 
     return 1;

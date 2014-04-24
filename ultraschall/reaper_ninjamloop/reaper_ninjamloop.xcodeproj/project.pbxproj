@@ -10,6 +10,7 @@
 		3327DE920E955E14001FCE4E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3327DE910E955E14001FCE4E /* Cocoa.framework */; };
 		3327DE960E955E1E001FCE4E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3327DE950E955E1E001FCE4E /* main.cpp */; };
 		3327DE980E955E2E001FCE4E /* swell-modstub.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3327DE970E955E2E001FCE4E /* swell-modstub.mm */; };
+		E98308DE190728EF0064491D /* reaper_plugin_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = E9F2C9AD19039E5A0069ADC6 /* reaper_plugin_functions.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E98308DE190728EF0064491D /* reaper_plugin_functions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
