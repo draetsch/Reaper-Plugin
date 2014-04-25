@@ -11,6 +11,8 @@
 		3327DE960E955E1E001FCE4E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3327DE950E955E1E001FCE4E /* main.cpp */; };
 		3327DE980E955E2E001FCE4E /* swell-modstub.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3327DE970E955E2E001FCE4E /* swell-modstub.mm */; };
 		E98308DE190728EF0064491D /* reaper_plugin_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = E9F2C9AD19039E5A0069ADC6 /* reaper_plugin_functions.h */; };
+		E9EBFB1E190A8D9C00157ACA /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9EBFB1C190A8D9C00157ACA /* tinyxml2.cpp */; };
+		E9EBFB1F190A8D9C00157ACA /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = E9EBFB1D190A8D9C00157ACA /* tinyxml2.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +20,8 @@
 		3327DE950E955E1E001FCE4E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3327DE970E955E2E001FCE4E /* swell-modstub.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "swell-modstub.mm"; path = "../../WDL/swell/swell-modstub.mm"; sourceTree = SOURCE_ROOT; };
 		D2AAC0630554660B00DB518D /* reaper_Ultraschall.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = reaper_Ultraschall.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9EBFB1C190A8D9C00157ACA /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
+		E9EBFB1D190A8D9C00157ACA /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		E9F2C9AD19039E5A0069ADC6 /* reaper_plugin_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = reaper_plugin_functions.h; path = ../../../../../../Applications/reaper_plugin_functions.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -46,6 +50,8 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				E9EBFB1C190A8D9C00157ACA /* tinyxml2.cpp */,
+				E9EBFB1D190A8D9C00157ACA /* tinyxml2.h */,
 				3327DE970E955E2E001FCE4E /* swell-modstub.mm */,
 				3327DE950E955E1E001FCE4E /* main.cpp */,
 				3327DE910E955E14001FCE4E /* Cocoa.framework */,
@@ -69,6 +75,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E98308DE190728EF0064491D /* reaper_plugin_functions.h in Headers */,
+				E9EBFB1F190A8D9C00157ACA /* tinyxml2.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +145,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9EBFB1E190A8D9C00157ACA /* tinyxml2.cpp in Sources */,
 				3327DE960E955E1E001FCE4E /* main.cpp in Sources */,
 				3327DE980E955E2E001FCE4E /* swell-modstub.mm in Sources */,
 			);

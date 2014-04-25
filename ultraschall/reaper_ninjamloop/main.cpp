@@ -11,16 +11,15 @@
 
 #include "../reaper_plugin.h"
 
-#include "../../WDL/queue.h"
-#include "../../WDL/jnetlib/jnetlib.h"
-#include "../../WDL/jnetlib/httpget.h"
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <ctime>
 #include <vector>
 #include <iterator>
-//#include "reaper_plugin_functions.h"
+
+#include "tinyxml2.h"
+
 
 
 void *(*GetSetMediaTrackInfo)(MediaTrack *tr, const char *parmname, void *setNewValue);
@@ -33,15 +32,18 @@ MediaItem* (*AddMediaItemToTrack)(MediaTrack* tr);
 bool (*SetMediaItemPosition)(MediaItem* item, double position, bool refreshUI);
 bool (*SetMediaItemLength)(MediaItem* item, double length, bool refreshUI);
 bool (*SetProjectMarker3)(ReaProject* proj, int markrgnindexnumber, bool isrgn, double pos, double rgnend, const char* name, int color);
+bool (*SetProjectMarker)(int markrgnindexnumber, bool isrgn, double pos, double rgnend, const char* name);
 int (*GetNumTracks)();
 void (*InsertTrackAtIndex)(int idx, bool wantDefaults);
 int (*AddProjectMarker2)(ReaProject* proj, bool isrgn, double pos, double rgnend, const char* name, int wantidx, int color);
 void (*UpdateArrange)();
 void (*UpdateTimeline)();
+int (*CountProjectMarkers)(ReaProject* proj, int* num_markersOut, int* num_regionsOut);
 
 
 int g_registered_command=0;
 int g_registered_command_01=1;
+int g_registered_command_02=2;
 
 
 REAPER_PLUGIN_HINSTANCE g_hInst;
@@ -60,8 +62,21 @@ gaccel_register_t acreg1=
     "Load shownote file"
 };
 
+gaccel_register_t acreg2=
+{
+    {FALT|FVIRTKEY,'5',0},
+    "Export chapters"
+};
+
 HWND g_parent;
 
+void exportChapters()
+{
+    auto ii = CountProjectMarkers(0,NULL,NULL);
+    char* h;
+    SetProjectMarker(2, NULL, NULL, NULL, h);
+    int o = 0;
+}
 
 void readChapterFile(char* fileName, MediaTrack* track )
 {
@@ -249,6 +264,11 @@ bool hookCommandProc(int command, int flag)
       ImportShowNotes();
       return true;
   }
+  if (g_registered_command_02 && command == g_registered_command_02)
+  {
+      exportChapters();
+      return true;
+  }
     
     UpdateTimeline();
     UpdateArrange();
@@ -278,6 +298,7 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     IMPORT(SetMediaItemPosition)
     IMPORT(SetMediaItemLength)
     IMPORT(SetProjectMarker3)
+    IMPORT(SetProjectMarker)
     IMPORT(GetNumTracks)
     IMPORT(InsertTrackAtIndex)
     IMPORT(InsertMedia)
@@ -286,17 +307,23 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     IMPORT(AddProjectMarker2)
     IMPORT(UpdateArrange)
     IMPORT(UpdateTimeline)
+    IMPORT(CountProjectMarkers)
 
     acreg.accel.cmd = g_registered_command = rec->Register("command_id",(void*)"Load chapter file");
     acreg1.accel.cmd = g_registered_command_01 = rec->Register("command_id",(void*)"Load shownote file");
+    acreg2.accel.cmd = g_registered_command_02 = rec->Register("command_id",(void*)"Export Chapters");
 
     if (!g_registered_command) return 0; // failed getting a command id, fail!
     if (!g_registered_command_01) return 0; // failed getting a command id, fail!
+      if (!g_registered_command_02) return 0; // failed getting a command id, fail!
 
     rec->Register("gaccel",&acreg);
     rec->Register("hookcommand",(void*)hookCommandProc);
       
     rec->Register("gaccel",&acreg1);
+    rec->Register("hookcommand",(void*)hookCommandProc);
+      
+    rec->Register("gaccel",&acreg2);
     rec->Register("hookcommand",(void*)hookCommandProc);
 
 
@@ -323,6 +350,13 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     mi2.dwTypeData = "Import Ultraschall shownote file";
     mi2.wID = g_registered_command_01;
     InsertMenuItem(hMenu, 12, TRUE, &mi2);
+      
+      MENUITEMINFO mi3={sizeof(MENUITEMINFO),};
+      mi3.fMask = MIIM_TYPE | MIIM_ID;
+      mi3.fType = MFT_STRING;
+      mi3.dwTypeData = "Export Ultraschall chapter file";
+      mi3.wID = g_registered_command_02;
+      InsertMenuItem(hMenu, 12, TRUE, &mi3);
     
     // our plugin registered, return success
 
