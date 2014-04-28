@@ -17,6 +17,7 @@
 #include <ctime>
 #include <vector>
 #include <iterator>
+#include <regex>
 
 #include "tinyxml2.h"
 
@@ -39,11 +40,15 @@ int (*AddProjectMarker2)(ReaProject* proj, bool isrgn, double pos, double rgnend
 void (*UpdateArrange)();
 void (*UpdateTimeline)();
 int (*CountProjectMarkers)(ReaProject* proj, int* num_markersOut, int* num_regionsOut);
+int (*EnumProjectMarkers)(int idx, bool* isrgnOut, double* posOut, double* rgnendOut, const char** nameOut, int* markrgnindexnumberOut);
+void (*format_timestr_pos)(double tpos, char* buf, int buf_sz, int modeoverride);
+ReaProject* (*EnumProjects)(int idx, char* projfn, int projfn_sz);
 
 
 int g_registered_command=0;
 int g_registered_command_01=1;
 int g_registered_command_02=2;
+int g_registered_command_03=3;
 
 
 REAPER_PLUGIN_HINSTANCE g_hInst;
@@ -52,19 +57,25 @@ HWND (*GetMainHwnd)();
 void (*GetProjectPath)(char *buf, int bufsz);
 gaccel_register_t acreg=
 {
-  {FALT|FVIRTKEY,'5',0},
+  {FALT|FVIRTKEY,'1',0},
   "Load chapter file"
 };
 
 gaccel_register_t acreg1=
 {
-    {FALT|FVIRTKEY,'5',0},
+    {FALT|FVIRTKEY,'2',0},
     "Load shownote file"
 };
 
 gaccel_register_t acreg2=
 {
-    {FALT|FVIRTKEY,'5',0},
+    {FALT|FVIRTKEY,'3',0},
+    "Export chapters xml"
+};
+
+gaccel_register_t acreg3=
+{
+    {FALT|FVIRTKEY,'4',0},
     "Export chapters"
 };
 
@@ -72,10 +83,67 @@ HWND g_parent;
 
 void exportChapters()
 {
-    auto ii = CountProjectMarkers(0,NULL,NULL);
-    char* h;
-    SetProjectMarker(2, NULL, NULL, NULL, h);
-    int o = 0;
+    int markerIndex = 0;
+    bool isRegion;
+    double pos;
+    double regionEnd;
+    const char *markerName;
+    int index;
+    char *charStr = new char[4096];
+    char *projectName = new char[4096];
+    
+    
+    EnumProjects(0, projectName, 4096);
+    
+    std::vector<std::string> chapterLines;
+    
+    while( EnumProjectMarkers( markerIndex++, &isRegion, &pos, &regionEnd, &markerName, &index) > 0 ) {
+        format_timestr_pos(pos, charStr, 4096, 0);
+        
+    }
+    
+    free(charStr);
+    free(projectName);
+    
+}
+
+void exportChaptersAsSimpleChapters()
+{
+    int markerIndex = 0;
+    bool isRegion;
+    double pos;
+    double regionEnd;
+    const char *markerName;
+    int index;
+    char *charStr = new char[4096];
+    char *projectName = new char[4096];
+    
+    
+    EnumProjects(0, projectName, 4096);
+    
+    tinyxml2::XMLDocument doc;
+    tinyxml2::XMLElement *rootElement = doc.NewElement("psc:chapters");
+    rootElement->SetAttribute("xmlns", "psc=\"http://podlove.org/simple-chapters\"");
+    rootElement->SetAttribute("version", "1.2");
+    
+    doc.InsertFirstChild(rootElement);
+    
+    while( EnumProjectMarkers( markerIndex++, &isRegion, &pos, &regionEnd, &markerName, &index) > 0 ) {
+        tinyxml2::XMLElement *chapterElement = doc.NewElement("psc:chapter");
+        format_timestr_pos(pos, charStr, 4096, 0);
+        chapterElement->SetAttribute("start", charStr);
+        chapterElement->SetAttribute("title", markerName);
+        rootElement->InsertEndChild(chapterElement);
+    }
+    
+    std::string sProjectName = std::string(projectName);
+    auto chapterFilename = sProjectName.substr( 0, sProjectName.find('.', 0) );
+    chapterFilename.append(".simplechapters");
+    
+    doc.SaveFile(chapterFilename.c_str());
+    
+    free(charStr);
+    free(projectName);
 }
 
 void readChapterFile(char* fileName, MediaTrack* track )
@@ -123,12 +191,20 @@ void readShownoteFile(char* fileName, MediaTrack* track)
     int maxlength = 30;
     int length;
     
+    std::vector<std::string> header;
+    
+    
     // read until the Header ends
     while (std::getline(infile, line))
     {
         if (strcmp(line.c_str(), "/HEADER") == 0) {
             break;
         }
+        
+        if (strcmp(line.c_str(), "HEADER") == 0) {
+            continue;
+        }
+        
     }
     
     // Read all shownote lines into a vector to reverse
@@ -137,23 +213,39 @@ void readShownoteFile(char* fileName, MediaTrack* track)
         if(line.empty())
             continue;
         
-        lines.push_back(line);
+        std::string firstElement = line.substr(0, line.find(' ', 0));
         
+        std::regex r("[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}");
+        auto iiu = std::regex_match(firstElement, r);
+        if(std::regex_match(firstElement, r))
+        {
+            lines.push_back(line);
+        }
+        else
+        {
+            lines.back().append(line);
+        }
+
     }
     
     // get first element to set starttime
-    std::string firstLine = lines.front();
-    std::string timeStamp = firstLine.substr(0, line.find(' ', 0));
-    starttime = std::stoi(timeStamp);
+    //std::string firstLine = lines.front();
+    //std::string timeStamp = firstLine.substr(0, line.find(' ', 0));
+    //starttime = std::stoi(timeStamp);
     
     
     // Iterate over all shownotes and create the mediaitems
     std::reverse(lines.begin(), lines.end());
     for (std::vector<std::string>::iterator iter = lines.begin(); iter != lines.end(); ++iter) {
+        
+        
+        
         std::string timeStamp = iter->substr(0, iter->find(' ', 0));
         std::string shownoteText = iter->substr(iter->find(' ', 0)+1, iter->length());
-        int time = std::stoi(timeStamp) - starttime;
+        //int time = std::stoi(timeStamp) - starttime;
         
+        double time = parse_timestr(timeStamp.c_str());
+         
         if(!lastStartTime)
             length = maxlength;
         else
@@ -266,6 +358,11 @@ bool hookCommandProc(int command, int flag)
   }
   if (g_registered_command_02 && command == g_registered_command_02)
   {
+      exportChaptersAsSimpleChapters();
+      return true;
+  }
+  if (g_registered_command_03 && command == g_registered_command_03)
+  {
       exportChapters();
       return true;
   }
@@ -308,14 +405,19 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     IMPORT(UpdateArrange)
     IMPORT(UpdateTimeline)
     IMPORT(CountProjectMarkers)
+    IMPORT(EnumProjectMarkers)
+    IMPORT(format_timestr_pos)
+    IMPORT(EnumProjects)
 
     acreg.accel.cmd = g_registered_command = rec->Register("command_id",(void*)"Load chapter file");
     acreg1.accel.cmd = g_registered_command_01 = rec->Register("command_id",(void*)"Load shownote file");
     acreg2.accel.cmd = g_registered_command_02 = rec->Register("command_id",(void*)"Export Chapters");
+    acreg3.accel.cmd = g_registered_command_03 = rec->Register("command_id",(void*)"Export Chapters2");
 
     if (!g_registered_command) return 0; // failed getting a command id, fail!
     if (!g_registered_command_01) return 0; // failed getting a command id, fail!
-      if (!g_registered_command_02) return 0; // failed getting a command id, fail!
+    if (!g_registered_command_02) return 0; // failed getting a command id, fail!
+    if (!g_registered_command_03) return 0; // failed getting a command id, fail!
 
     rec->Register("gaccel",&acreg);
     rec->Register("hookcommand",(void*)hookCommandProc);
@@ -324,6 +426,9 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     rec->Register("hookcommand",(void*)hookCommandProc);
       
     rec->Register("gaccel",&acreg2);
+    rec->Register("hookcommand",(void*)hookCommandProc);
+      
+    rec->Register("gaccel",&acreg3);
     rec->Register("hookcommand",(void*)hookCommandProc);
 
 
@@ -342,21 +447,28 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     mi.fType = MFT_STRING;
     mi.dwTypeData = "Import Ultraschall chapter file";
     mi.wID = g_registered_command;
-    InsertMenuItem(hMenu, 11, TRUE, &mi);
+    InsertMenuItem(hMenu, 22, TRUE, &mi);
       
     MENUITEMINFO mi2={sizeof(MENUITEMINFO),};
     mi2.fMask = MIIM_TYPE | MIIM_ID;
     mi2.fType = MFT_STRING;
     mi2.dwTypeData = "Import Ultraschall shownote file";
     mi2.wID = g_registered_command_01;
-    InsertMenuItem(hMenu, 12, TRUE, &mi2);
+    InsertMenuItem(hMenu, 23, TRUE, &mi2);
       
-      MENUITEMINFO mi3={sizeof(MENUITEMINFO),};
-      mi3.fMask = MIIM_TYPE | MIIM_ID;
-      mi3.fType = MFT_STRING;
-      mi3.dwTypeData = "Export Ultraschall chapter file";
-      mi3.wID = g_registered_command_02;
-      InsertMenuItem(hMenu, 12, TRUE, &mi3);
+    MENUITEMINFO mi3={sizeof(MENUITEMINFO),};
+    mi3.fMask = MIIM_TYPE | MIIM_ID;
+    mi3.fType = MFT_STRING;
+    mi3.dwTypeData = "Export Ultraschall PODLove simple chapters";
+    mi3.wID = g_registered_command_02;
+    InsertMenuItem(hMenu, 24, TRUE, &mi3);
+      
+    MENUITEMINFO mi4={sizeof(MENUITEMINFO),};
+    mi4.fMask = MIIM_TYPE | MIIM_ID;
+    mi4.fType = MFT_STRING;
+    mi4.dwTypeData = "Export Ultraschall mp4 chapters";
+    mi4.wID = g_registered_command_03;
+    InsertMenuItem(hMenu, 25, TRUE, &mi4);
     
     // our plugin registered, return success
 

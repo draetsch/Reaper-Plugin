@@ -20,6 +20,8 @@
 		3327DE950E955E1E001FCE4E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3327DE970E955E2E001FCE4E /* swell-modstub.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "swell-modstub.mm"; path = "../../WDL/swell/swell-modstub.mm"; sourceTree = SOURCE_ROOT; };
 		D2AAC0630554660B00DB518D /* reaper_Ultraschall.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = reaper_Ultraschall.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9540F14190F145400CD7CF8 /* freak-show-131.osf */ = {isa = PBXFileReference; lastKnownFileType = text; name = "freak-show-131.osf"; path = "../../../../Desktop/freak-show-131.osf"; sourceTree = "<group>"; };
+		E9540F15190F151E00CD7CF8 /* freak-show-128.mp4chaps */ = {isa = PBXFileReference; lastKnownFileType = text; name = "freak-show-128.mp4chaps"; path = "../../../../Desktop/freak-show-128.mp4chaps"; sourceTree = "<group>"; };
 		E9EBFB1C190A8D9C00157ACA /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
 		E9EBFB1D190A8D9C00157ACA /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		E9F2C9AD19039E5A0069ADC6 /* reaper_plugin_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = reaper_plugin_functions.h; path = ../../../../../../Applications/reaper_plugin_functions.h; sourceTree = "<group>"; };
@@ -43,6 +45,8 @@
 				E9F2C9AD19039E5A0069ADC6 /* reaper_plugin_functions.h */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
+				E9540F14190F145400CD7CF8 /* freak-show-131.osf */,
+				E9540F15190F151E00CD7CF8 /* freak-show-128.mp4chaps */,
 			);
 			name = reaper_ninjamloop;
 			sourceTree = "<group>";
