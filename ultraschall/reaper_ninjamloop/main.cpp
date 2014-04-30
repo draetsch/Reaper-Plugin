@@ -18,6 +18,7 @@
 #include <vector>
 #include <iterator>
 #include <regex>
+#include <tuple>
 
 #include "tinyxml2.h"
 
@@ -77,6 +78,12 @@ gaccel_register_t acreg3=
 {
     {FALT|FVIRTKEY,'4',0},
     "Export chapters"
+};
+
+struct shownoteData
+{
+    double pos;
+    std::string note;
 };
 
 HWND g_parent;
@@ -185,7 +192,7 @@ void readShownoteFile(char* fileName, MediaTrack* track)
     
     std::ifstream infile(fileName);
     std::string line;
-    std::vector<std::string> lines;
+    std::vector<shownoteData> lines;
     int starttime = NULL;
     int lastStartTime = NULL;
     int maxlength = 30;
@@ -207,6 +214,11 @@ void readShownoteFile(char* fileName, MediaTrack* track)
         
     }
     
+    // check for type of timestamp
+    //auto jk = lines[0].substr(0, lines[0].find(' ', 0));
+    
+    
+    
     // Read all shownote lines into a vector to reverse
     while (std::getline(infile, line)) {
         
@@ -216,59 +228,86 @@ void readShownoteFile(char* fileName, MediaTrack* track)
         std::string firstElement = line.substr(0, line.find(' ', 0));
         
         std::regex r("[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}");
-        auto iiu = std::regex_match(firstElement, r);
+        
+        shownoteData data;
+        
+        
+        
+        // timestring is in format 00:00:00.000
         if(std::regex_match(firstElement, r))
         {
-            lines.push_back(line);
+            data.pos = parse_timestr(firstElement.c_str());
+            
+            
         }
         else
         {
-            lines.back().append(line);
+            // timestamp is unix timestamp
+            try {
+                
+                if (!starttime) {
+                    starttime = std::stod(firstElement);
+                    data.pos = 0;
+                }
+                else
+                {
+                    data.pos = std::stod(firstElement) - starttime;
+                }
+                
+            } catch (std::exception& e) {
+                if (lines.size() > 0) {
+                    lines.back().note.append(line);
+                }
+                else
+                {
+                    // Error
+                }
+            }
         }
+        
+        data.note = line.substr(line.find(' ', 0)+1, line.length());
+        lines.push_back(data);
+        
 
     }
-    
-    // get first element to set starttime
-    //std::string firstLine = lines.front();
-    //std::string timeStamp = firstLine.substr(0, line.find(' ', 0));
-    //starttime = std::stoi(timeStamp);
+
     
     
     // Iterate over all shownotes and create the mediaitems
     std::reverse(lines.begin(), lines.end());
-    for (std::vector<std::string>::iterator iter = lines.begin(); iter != lines.end(); ++iter) {
+    for (std::vector<shownoteData>::iterator iter = lines.begin(); iter != lines.end(); ++iter) {
         
         
         
-        std::string timeStamp = iter->substr(0, iter->find(' ', 0));
-        std::string shownoteText = iter->substr(iter->find(' ', 0)+1, iter->length());
+        //std::string timeStamp = iter->substr(0, iter->find(' ', 0));
+        //std::string shownoteText = iter->substr(iter->find(' ', 0)+1, iter->length());
         //int time = std::stoi(timeStamp) - starttime;
         
-        double time = parse_timestr(timeStamp.c_str());
+        //double time = parse_timestr(timeStamp.c_str());
          
         if(!lastStartTime)
             length = maxlength;
         else
         {
         
-            if (lastStartTime-time > maxlength) {
+            if (lastStartTime-iter->pos > maxlength) {
                 length = maxlength;
             }
             else
             {
-                length = lastStartTime-time;
+                length = lastStartTime - iter->pos;
             }
         }
         
         MediaItem* item = AddMediaItemToTrack(track);
         if(item)
         {
-            SetMediaItemPosition(item, time, true);
+            SetMediaItemPosition(item, iter->pos, true);
             SetMediaItemLength(item, length, true);
-            GetSetMediaItemInfo(item, "P_NOTES", (void*)shownoteText.c_str());
+            GetSetMediaItemInfo(item, "P_NOTES", (void*)iter->note.c_str());
         }
         
-        lastStartTime = time;
+        lastStartTime = iter->pos;
         
     }
     
