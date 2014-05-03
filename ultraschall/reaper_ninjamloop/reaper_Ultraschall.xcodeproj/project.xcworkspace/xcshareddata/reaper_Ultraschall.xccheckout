@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>96E5B7D9-0DA9-4FC4-85B3-C1897BAF7D68</string>
+	<key>IDESourceControlProjectName</key>
+	<string>reaper_Ultraschall</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C7FBC594-B70D-46F4-B64B-69C678525D59</key>
+		<string>https://github.com/Ultraschall/Coding.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ultraschall/reaper_ninjamloop/reaper_Ultraschall.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C7FBC594-B70D-46F4-B64B-69C678525D59</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Ultraschall/Coding.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C7FBC594-B70D-46F4-B64B-69C678525D59</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C7FBC594-B70D-46F4-B64B-69C678525D59</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Coding</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -19,6 +19,7 @@
 #include <iterator>
 #include <regex>
 #include <tuple>
+#include <fstream>
 
 #include "tinyxml2.h"
 
@@ -44,12 +45,14 @@ int (*CountProjectMarkers)(ReaProject* proj, int* num_markersOut, int* num_regio
 int (*EnumProjectMarkers)(int idx, bool* isrgnOut, double* posOut, double* rgnendOut, const char** nameOut, int* markrgnindexnumberOut);
 void (*format_timestr_pos)(double tpos, char* buf, int buf_sz, int modeoverride);
 ReaProject* (*EnumProjects)(int idx, char* projfn, int projfn_sz);
+int (*ShowMessageBox)(const char* msg, const char* title, int type);
 
 
 int g_registered_command=0;
 int g_registered_command_01=1;
 int g_registered_command_02=2;
 int g_registered_command_03=3;
+int g_registered_command_04=4;
 
 
 REAPER_PLUGIN_HINSTANCE g_hInst;
@@ -80,6 +83,12 @@ gaccel_register_t acreg3=
     "Export chapters"
 };
 
+gaccel_register_t acreg4=
+{
+    {FALT|FVIRTKEY,'5',0},
+    "Export shownotes"
+};
+
 struct shownoteData
 {
     double pos;
@@ -87,6 +96,15 @@ struct shownoteData
 };
 
 HWND g_parent;
+
+void exportShownotes()
+{
+    
+    
+    
+    
+    auto i = 0;
+}
 
 void exportChapters()
 {
@@ -102,12 +120,34 @@ void exportChapters()
     
     EnumProjects(0, projectName, 4096);
     
+    if ( strcmp(projectName, "") == 0 ) {
+        ShowMessageBox("The Project was not safed", "Project location error", 0);
+        return;
+    }
+    
     std::vector<std::string> chapterLines;
     
     while( EnumProjectMarkers( markerIndex++, &isRegion, &pos, &regionEnd, &markerName, &index) > 0 ) {
         format_timestr_pos(pos, charStr, 4096, 0);
+
+        std::string a(charStr);
+        a.append((std::string)" " + markerName);
         
+        chapterLines.push_back(a);
     }
+    
+    std::string sProjectName = std::string(projectName);
+    auto chapterFilename = sProjectName.substr( 0, sProjectName.find('.', 0) );
+    std::ofstream chapterFile(chapterFilename + ".mp4chaps", std::ios::app);
+    
+    for (std::vector<std::string>::iterator iter = chapterLines.begin(); iter != chapterLines.end(); ++iter)
+    {
+        chapterFile << iter->data() << "\n";
+    }
+    
+    
+    
+    chapterFile.close();
     
     free(charStr);
     free(projectName);
@@ -127,6 +167,11 @@ void exportChaptersAsSimpleChapters()
     
     
     EnumProjects(0, projectName, 4096);
+    
+    if ( strcmp(projectName, "") == 0 ) {
+        ShowMessageBox("The Project was not safed", "Project location error", 0);
+        return;
+    }
     
     tinyxml2::XMLDocument doc;
     tinyxml2::XMLElement *rootElement = doc.NewElement("psc:chapters");
@@ -232,7 +277,6 @@ void readShownoteFile(char* fileName, MediaTrack* track)
         shownoteData data;
         
         
-        
         // timestring is in format 00:00:00.000
         if(std::regex_match(firstElement, r))
         {
@@ -256,7 +300,8 @@ void readShownoteFile(char* fileName, MediaTrack* track)
                 
             } catch (std::exception& e) {
                 if (lines.size() > 0) {
-                    lines.back().note.append(line);
+                    lines.back().note.append("\n " + line);
+                    continue;
                 }
                 else
                 {
@@ -405,6 +450,11 @@ bool hookCommandProc(int command, int flag)
       exportChapters();
       return true;
   }
+  if (g_registered_command_04 && command == g_registered_command_04)
+  {
+      exportShownotes();
+      return true;
+  }
     
     UpdateTimeline();
     UpdateArrange();
@@ -447,16 +497,19 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     IMPORT(EnumProjectMarkers)
     IMPORT(format_timestr_pos)
     IMPORT(EnumProjects)
+    IMPORT(ShowMessageBox)
 
     acreg.accel.cmd = g_registered_command = rec->Register("command_id",(void*)"Load chapter file");
     acreg1.accel.cmd = g_registered_command_01 = rec->Register("command_id",(void*)"Load shownote file");
     acreg2.accel.cmd = g_registered_command_02 = rec->Register("command_id",(void*)"Export Chapters");
     acreg3.accel.cmd = g_registered_command_03 = rec->Register("command_id",(void*)"Export Chapters2");
+    acreg4.accel.cmd = g_registered_command_04 = rec->Register("command_id",(void*)"Export Shownotes");
 
     if (!g_registered_command) return 0; // failed getting a command id, fail!
     if (!g_registered_command_01) return 0; // failed getting a command id, fail!
     if (!g_registered_command_02) return 0; // failed getting a command id, fail!
     if (!g_registered_command_03) return 0; // failed getting a command id, fail!
+    if (!g_registered_command_04) return 0; // failed getting a command id, fail!
 
     rec->Register("gaccel",&acreg);
     rec->Register("hookcommand",(void*)hookCommandProc);
@@ -470,6 +523,8 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     rec->Register("gaccel",&acreg3);
     rec->Register("hookcommand",(void*)hookCommandProc);
 
+    rec->Register("gaccel",&acreg4);
+    rec->Register("hookcommand",(void*)hookCommandProc);
 
     g_parent = GetMainHwnd();
 
@@ -486,29 +541,36 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     mi.fType = MFT_STRING;
     mi.dwTypeData = "Import Ultraschall chapter file";
     mi.wID = g_registered_command;
-    InsertMenuItem(hMenu, 22, TRUE, &mi);
+    InsertMenuItem(hMenu, 7, TRUE, &mi);
       
     MENUITEMINFO mi2={sizeof(MENUITEMINFO),};
     mi2.fMask = MIIM_TYPE | MIIM_ID;
     mi2.fType = MFT_STRING;
     mi2.dwTypeData = "Import Ultraschall shownote file";
     mi2.wID = g_registered_command_01;
-    InsertMenuItem(hMenu, 23, TRUE, &mi2);
+    InsertMenuItem(hMenu, 8, TRUE, &mi2);
       
     MENUITEMINFO mi3={sizeof(MENUITEMINFO),};
     mi3.fMask = MIIM_TYPE | MIIM_ID;
     mi3.fType = MFT_STRING;
     mi3.dwTypeData = "Export Ultraschall PODLove simple chapters";
     mi3.wID = g_registered_command_02;
-    InsertMenuItem(hMenu, 24, TRUE, &mi3);
+    InsertMenuItem(hMenu, 9, TRUE, &mi3);
       
     MENUITEMINFO mi4={sizeof(MENUITEMINFO),};
     mi4.fMask = MIIM_TYPE | MIIM_ID;
     mi4.fType = MFT_STRING;
     mi4.dwTypeData = "Export Ultraschall mp4 chapters";
     mi4.wID = g_registered_command_03;
-    InsertMenuItem(hMenu, 25, TRUE, &mi4);
-    
+    InsertMenuItem(hMenu, 10, TRUE, &mi4);
+
+      MENUITEMINFO mi5={sizeof(MENUITEMINFO),};
+      mi5.fMask = MIIM_TYPE | MIIM_ID;
+      mi5.fType = MFT_STRING;
+      mi5.dwTypeData = "Export Ultraschall Shownotes";
+      mi5.wID = g_registered_command_04;
+      InsertMenuItem(hMenu, 11, TRUE, &mi5);
+
     // our plugin registered, return success
 
     return 1;
