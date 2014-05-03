@@ -46,6 +46,8 @@ int (*EnumProjectMarkers)(int idx, bool* isrgnOut, double* posOut, double* rgnen
 void (*format_timestr_pos)(double tpos, char* buf, int buf_sz, int modeoverride);
 ReaProject* (*EnumProjects)(int idx, char* projfn, int projfn_sz);
 int (*ShowMessageBox)(const char* msg, const char* title, int type);
+MediaItem* (*GetTrackMediaItem)(MediaTrack* tr, int itemidx);
+int (*CountTrackMediaItems)(MediaTrack* track);
 
 
 int g_registered_command=0;
@@ -95,15 +97,28 @@ struct shownoteData
     std::string note;
 };
 
+MediaTrack* getTrackByName(char* trackName);
+
+
 HWND g_parent;
 
 void exportShownotes()
 {
     
+    MediaTrack* track = getTrackByName("Shownotes");
     
+    if(!track)
+        return;
     
+    for (int i=0; i < CountTrackMediaItems(track); ++i) {
+        
+        MediaItem* item = GetTrackMediaItem(track, i);
+        
+        std::string note = (const char*)GetSetMediaItemInfo(item, "P_NOTES", NULL);
+
+    }
     
-    auto i = 0;
+
 }
 
 void exportChapters()
@@ -498,6 +513,8 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     IMPORT(format_timestr_pos)
     IMPORT(EnumProjects)
     IMPORT(ShowMessageBox)
+    IMPORT(CountTrackMediaItems)
+    IMPORT(GetTrackMediaItem)
 
     acreg.accel.cmd = g_registered_command = rec->Register("command_id",(void*)"Load chapter file");
     acreg1.accel.cmd = g_registered_command_01 = rec->Register("command_id",(void*)"Load shownote file");
