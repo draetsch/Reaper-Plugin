@@ -32,6 +32,7 @@ CAPTION "NINJAM Loop Getter"
 FONT 8, "MS Shell Dlg"
 BEGIN
     PUSHBUTTON      "Cancel",IDC_BUTTON1,64,39,50,14
+        PUSHBUTTON      "Cancel2",IDC_BUTTON2,64,39,60,14
     LTEXT           "Getting loop..",IDC_STATIC,67,20,43,8
 END
 

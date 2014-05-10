@@ -10,6 +10,7 @@
 #include "resource.h"
 
 #include "../reaper_plugin.h"
+#include "reaper.h"
 
 #include <fstream>
 #include <sstream>
@@ -21,8 +22,13 @@
 #include <tuple>
 #include <fstream>
 
-#include "tinyxml2.h"
+#include "../../WDL/queue.h"
 
+#include "tinyxml2.h"
+#include "Shownote_functions.h"
+#include "Chapter_functions.h"
+
+extern gaccel_register_t mdbla;
 
 
 void *(*GetSetMediaTrackInfo)(MediaTrack *tr, const char *parmname, void *setNewValue);
@@ -48,13 +54,14 @@ ReaProject* (*EnumProjects)(int idx, char* projfn, int projfn_sz);
 int (*ShowMessageBox)(const char* msg, const char* title, int type);
 MediaItem* (*GetTrackMediaItem)(MediaTrack* tr, int itemidx);
 int (*CountTrackMediaItems)(MediaTrack* track);
+PCM_sink* (*PCM_Sink_Create)(const char* filename, const char* cfg, int cfg_sz, int nch, int srate, bool buildpeaks);
 
 
 int g_registered_command=0;
-int g_registered_command_01=1;
-int g_registered_command_02=2;
-int g_registered_command_03=3;
-int g_registered_command_04=4;
+int g_registered_command_01=0;
+int g_registered_command_02=0;
+int g_registered_command_03=0;
+int g_registered_command_04=0;
 
 
 REAPER_PLUGIN_HINSTANCE g_hInst;
@@ -64,384 +71,126 @@ void (*GetProjectPath)(char *buf, int bufsz);
 gaccel_register_t acreg=
 {
   {FALT|FVIRTKEY,'1',0},
-  "Load chapter file"
+  "Ultraschall Load chapter"
 };
 
 gaccel_register_t acreg1=
 {
     {FALT|FVIRTKEY,'2',0},
-    "Load shownote file"
+    "Ultraschall Load Shownote"
 };
 
 gaccel_register_t acreg2=
 {
     {FALT|FVIRTKEY,'3',0},
-    "Export chapters xml"
+    "Ultraschall Export Simplechapters"
 };
 
 gaccel_register_t acreg3=
 {
     {FALT|FVIRTKEY,'4',0},
-    "Export chapters"
+    "Ultraschall Export chapters"
 };
 
 gaccel_register_t acreg4=
 {
     {FALT|FVIRTKEY,'5',0},
-    "Export shownotes"
+    "Ultraschall Export Shownotes"
 };
 
-struct shownoteData
-{
-    double pos;
-    std::string note;
-};
 
-MediaTrack* getTrackByName(char* trackName);
 
 
 HWND g_parent;
 
-void exportShownotes()
+WDL_DLGRET doInsertProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    
-    MediaTrack* track = getTrackByName("Shownotes");
-    
-    if(!track)
-        return;
-    
-    for (int i=0; i < CountTrackMediaItems(track); ++i) {
-        
-        MediaItem* item = GetTrackMediaItem(track, i);
-        
-        std::string note = (const char*)GetSetMediaItemInfo(item, "P_NOTES", NULL);
-
-    }
-    
-
-}
-
-void exportChapters()
-{
-    int markerIndex = 0;
-    bool isRegion;
-    double pos;
-    double regionEnd;
-    const char *markerName;
-    int index;
-    char *charStr = new char[4096];
-    char *projectName = new char[4096];
-    
-    
-    EnumProjects(0, projectName, 4096);
-    
-    if ( strcmp(projectName, "") == 0 ) {
-        ShowMessageBox("The Project was not safed", "Project location error", 0);
-        return;
-    }
-    
-    std::vector<std::string> chapterLines;
-    
-    while( EnumProjectMarkers( markerIndex++, &isRegion, &pos, &regionEnd, &markerName, &index) > 0 ) {
-        format_timestr_pos(pos, charStr, 4096, 0);
-
-        std::string a(charStr);
-        a.append((std::string)" " + markerName);
-        
-        chapterLines.push_back(a);
-    }
-    
-    std::string sProjectName = std::string(projectName);
-    auto chapterFilename = sProjectName.substr( 0, sProjectName.find('.', 0) );
-    std::ofstream chapterFile(chapterFilename + ".mp4chaps", std::ios::app);
-    
-    for (std::vector<std::string>::iterator iter = chapterLines.begin(); iter != chapterLines.end(); ++iter)
+    //static JNL_HTTPGet *m_get;
+    //static WDL_Queue m_buf;
+    switch (uMsg)
     {
-        chapterFile << iter->data() << "\n";
-    }
-    
-    
-    
-    chapterFile.close();
-    
-    free(charStr);
-    free(projectName);
-    
-}
-
-void exportChaptersAsSimpleChapters()
-{
-    int markerIndex = 0;
-    bool isRegion;
-    double pos;
-    double regionEnd;
-    const char *markerName;
-    int index;
-    char *charStr = new char[4096];
-    char *projectName = new char[4096];
-    
-    
-    EnumProjects(0, projectName, 4096);
-    
-    if ( strcmp(projectName, "") == 0 ) {
-        ShowMessageBox("The Project was not safed", "Project location error", 0);
-        return;
-    }
-    
-    tinyxml2::XMLDocument doc;
-    tinyxml2::XMLElement *rootElement = doc.NewElement("psc:chapters");
-    rootElement->SetAttribute("xmlns", "psc=\"http://podlove.org/simple-chapters\"");
-    rootElement->SetAttribute("version", "1.2");
-    
-    doc.InsertFirstChild(rootElement);
-    
-    while( EnumProjectMarkers( markerIndex++, &isRegion, &pos, &regionEnd, &markerName, &index) > 0 ) {
-        tinyxml2::XMLElement *chapterElement = doc.NewElement("psc:chapter");
-        format_timestr_pos(pos, charStr, 4096, 0);
-        chapterElement->SetAttribute("start", charStr);
-        chapterElement->SetAttribute("title", markerName);
-        rootElement->InsertEndChild(chapterElement);
-    }
-    
-    std::string sProjectName = std::string(projectName);
-    auto chapterFilename = sProjectName.substr( 0, sProjectName.find('.', 0) );
-    chapterFilename.append(".simplechapters");
-    
-    doc.SaveFile(chapterFilename.c_str());
-    
-    free(charStr);
-    free(projectName);
-}
-
-void readChapterFile(char* fileName, MediaTrack* track )
-{
-    
-    std::ifstream infile(fileName);
-    int markerindex = 0;
-    std::string line;
-    
-    while (std::getline(infile, line)) {
-        
-        
-        std::string timeStamp = line.substr(0, line.find(' ', 0));
-        std::string chapterText = line.substr(line.find(' ', 0)+1, line.length());
-        
-        std::string* test = &chapterText;
-        
-        double time = parse_timestr(timeStamp.c_str());
-        
-        
-        MediaItem* item = AddMediaItemToTrack(track);
-        if(item)
-        {
-            SetMediaItemPosition(item, time, true);
-            SetMediaItemLength(item, 10, true);
-            GetSetMediaItemInfo(item, "P_NOTES", (void*)test->c_str());
-            AddProjectMarker2(0, false, time, 10, chapterText.c_str(), 0, 0xFFFF00);
-        }
-        markerindex++;
-        
-    }
-    
-    infile.close();
-    
-}
-
-void readShownoteFile(char* fileName, MediaTrack* track)
-{
-    
-    std::ifstream infile(fileName);
-    std::string line;
-    std::vector<shownoteData> lines;
-    int starttime = NULL;
-    int lastStartTime = NULL;
-    int maxlength = 30;
-    int length;
-    
-    std::vector<std::string> header;
-    
-    
-    // read until the Header ends
-    while (std::getline(infile, line))
-    {
-        if (strcmp(line.c_str(), "/HEADER") == 0) {
-            break;
-        }
-        
-        if (strcmp(line.c_str(), "HEADER") == 0) {
-            continue;
-        }
-        
-    }
-    
-    // check for type of timestamp
-    //auto jk = lines[0].substr(0, lines[0].find(' ', 0));
-    
-    
-    
-    // Read all shownote lines into a vector to reverse
-    while (std::getline(infile, line)) {
-        
-        if(line.empty())
-            continue;
-        
-        std::string firstElement = line.substr(0, line.find(' ', 0));
-        
-        std::regex r("[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}");
-        
-        shownoteData data;
-        
-        
-        // timestring is in format 00:00:00.000
-        if(std::regex_match(firstElement, r))
-        {
-            data.pos = parse_timestr(firstElement.c_str());
+        case WM_INITDIALOG:
+            //m_get=new JNL_HTTPGet;
+            //m_get->connect("http://autosong.ninjam.com/autoloop/auto.php");
+            //m_buf.Clear();
             
-            
-        }
-        else
-        {
-            // timestamp is unix timestamp
-            try {
-                
-                if (!starttime) {
-                    starttime = std::stod(firstElement);
-                    data.pos = 0;
-                }
-                else
-                {
-                    data.pos = std::stod(firstElement) - starttime;
-                }
-                
-            } catch (std::exception& e) {
-                if (lines.size() > 0) {
-                    lines.back().note.append("\n " + line);
-                    continue;
-                }
-                else
-                {
-                    // Error
-                }
-            }
-        }
-        
-        data.note = line.substr(line.find(' ', 0)+1, line.length());
-        lines.push_back(data);
-        
-
-    }
-
-    
-    
-    // Iterate over all shownotes and create the mediaitems
-    std::reverse(lines.begin(), lines.end());
-    for (std::vector<shownoteData>::iterator iter = lines.begin(); iter != lines.end(); ++iter) {
-        
-        
-        
-        //std::string timeStamp = iter->substr(0, iter->find(' ', 0));
-        //std::string shownoteText = iter->substr(iter->find(' ', 0)+1, iter->length());
-        //int time = std::stoi(timeStamp) - starttime;
-        
-        //double time = parse_timestr(timeStamp.c_str());
-         
-        if(!lastStartTime)
-            length = maxlength;
-        else
-        {
-        
-            if (lastStartTime-iter->pos > maxlength) {
-                length = maxlength;
-            }
-            else
+            //SetTimer(hwndDlg,1,20,NULL);
+            return 0;
+        case WM_TIMER:
+            /*if (wParam==1)
             {
-                length = lastStartTime - iter->pos;
+                int rv=m_get->run();
+                if (rv>=0)
+                {
+                    int av=m_get->bytes_available();
+                    if (av>0)
+                    {
+                        m_get->get_bytes((char*)m_buf.Add(NULL,av),av);
+                    }
+                }
+                
+                if (rv==0)  return 0;
+                
+                KillTimer(hwndDlg,1);
+                char *hdr=0;
+                if (rv<0||m_buf.GetSize()<1||!(hdr=m_get->getheader("ex-fn"))||!*hdr||strstr(hdr,"/") || strstr(hdr,"\\"))
+                    MessageBox(hwndDlg,"Error getting a loop, internet ok?","Err",MB_OK);
+                else
+                {
+                    char buf[2048];
+                    GetProjectPath(buf,sizeof(buf)-1024);
+                    strcat(buf,"\\");
+                    lstrcpyn(buf+strlen(buf),hdr,512);
+                    FILE *fp=fopen(buf,"rb");
+                    if (fp)
+                    {
+                        fclose(fp);
+                        MessageBox(hwndDlg,"Error writing loop, file already exists!","Err",MB_OK);
+                    }
+                    else
+                    {
+                        fp=fopen(buf,"wb");
+                        if (!fp)
+                        {
+                            MessageBox(hwndDlg,"Error writing loop, could not create flie!","Err",MB_OK);
+                        }
+                        else
+                        {
+                            fwrite(m_buf.Get(),1,m_buf.GetSize(),fp);
+                            fclose(fp);
+                            
+                            InsertMedia(buf,0);
+                        }
+                    }
+                    // save to disk, insert loop
+                }
+                EndDialog(hwndDlg,0);
+                
+            }*/
+            return 0;
+        case WM_COMMAND:
+            if (LOWORD(wParam)==IDCANCEL)
+            {
+                EndDialog(hwndDlg,0);
             }
-        }
-        
-        MediaItem* item = AddMediaItemToTrack(track);
-        if(item)
-        {
-            SetMediaItemPosition(item, iter->pos, true);
-            SetMediaItemLength(item, length, true);
-            GetSetMediaItemInfo(item, "P_NOTES", (void*)iter->note.c_str());
-        }
-        
-        lastStartTime = iter->pos;
-        
+            return 0;
+        case WM_DESTROY:
+            //m_buf.Clear();
+            //delete m_get;
+            return 0;
     }
-    
-    
-    infile.close();
-
+    return 0;
 }
 
-MediaTrack* getTrackByName(char* trackName)
+
+void DoInsertPoo()
 {
     
-    for (int i = 0; i < GetNumTracks(); ++i) {
-        
-        MediaTrack* track = GetTrack(0,i);
-        
-        char* currentTrackName = (char*)GetSetMediaTrackInfo(track, "P_NAME", NULL);
-        
-        if(strcmp(currentTrackName, trackName) == 0)
-        {
-            free(currentTrackName);
-            return track;
-        }
-        
-        
-    }
-    
-    
-    return NULL;
-    
+    DialogBox(g_hInst,MAKEINTRESOURCE(IDD_CFG),g_parent,doInsertProc);
 }
 
 
-void ImportChapters()
-{
-    char* chapterTrackName = "Chapters";
-    char* selectedImportPath = new char[4096];
-    
-    MediaTrack* track = getTrackByName("Chapters");
 
-    if(!track)
-    {
-        InsertTrackAtIndex(0, true);
-        track = GetTrack(0,0);
-        GetSetMediaTrackInfo(track, "P_NAME", chapterTrackName);
-    }
-    
-    
-    if(GetUserFileNameForRead(selectedImportPath, "Load Chapter File", "mp4chaps"))
-        readChapterFile(selectedImportPath, track);
-    
-    free(selectedImportPath);
-    
-}
-
-void ImportShowNotes()
-{
-    char* shownoteTrackName = "Shownotes";
-    char* selectedImportPath = new char[4096];
-    
-    MediaTrack* track = getTrackByName("Shownotes");
-    
-    if(!track)
-    {
-        InsertTrackAtIndex(0, true);
-        track = GetTrack(0,0);
-        GetSetMediaTrackInfo(track, "P_NAME", shownoteTrackName);
-    }
-    
-    
-    if(GetUserFileNameForRead(selectedImportPath, "Load Shownote File", "osf"))
-        readShownoteFile(selectedImportPath, track);
-    
-    free(selectedImportPath);
-}
 
 bool hookCommandProc(int command, int flag)
 {
@@ -468,8 +217,14 @@ bool hookCommandProc(int command, int flag)
   if (g_registered_command_04 && command == g_registered_command_04)
   {
       exportShownotes();
+      //DoInsertPoo();
       return true;
   }
+    
+    
+    //DialogBox(g_hInst, MAKEINTRESOURCE(IDD_CFG), g_parent, doInsertProc);
+    
+
     
     UpdateTimeline();
     UpdateArrange();
@@ -515,13 +270,19 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     IMPORT(ShowMessageBox)
     IMPORT(CountTrackMediaItems)
     IMPORT(GetTrackMediaItem)
-
-    acreg.accel.cmd = g_registered_command = rec->Register("command_id",(void*)"Load chapter file");
-    acreg1.accel.cmd = g_registered_command_01 = rec->Register("command_id",(void*)"Load shownote file");
-    acreg2.accel.cmd = g_registered_command_02 = rec->Register("command_id",(void*)"Export Chapters");
-    acreg3.accel.cmd = g_registered_command_03 = rec->Register("command_id",(void*)"Export Chapters2");
-    acreg4.accel.cmd = g_registered_command_04 = rec->Register("command_id",(void*)"Export Shownotes");
-
+    IMPORT(PCM_Sink_Create)
+    IMPORT(GetMediaItemInfo_Value)
+      
+      
+    
+      acreg.accel.cmd = g_registered_command = rec->Register("command_id",(void*)"1");
+    acreg1.accel.cmd = g_registered_command_01 = rec->Register("command_id",(void*)"2");
+    acreg2.accel.cmd = g_registered_command_02 = rec->Register("command_id",(void*)"3");
+    acreg3.accel.cmd = g_registered_command_03 = rec->Register("command_id",(void*)"4");
+    acreg4.accel.cmd = g_registered_command_04 = rec->Register("command_id",(void*)"5");
+      //mdbla.accel.cmd = g_registered_command_06 = rec->Register("command_id", (void*)"bla");
+      //rec->Register("gaccel", &mdbla);
+      
     if (!g_registered_command) return 0; // failed getting a command id, fail!
     if (!g_registered_command_01) return 0; // failed getting a command id, fail!
     if (!g_registered_command_02) return 0; // failed getting a command id, fail!
@@ -532,19 +293,17 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
     rec->Register("hookcommand",(void*)hookCommandProc);
       
     rec->Register("gaccel",&acreg1);
-    rec->Register("hookcommand",(void*)hookCommandProc);
       
     rec->Register("gaccel",&acreg2);
-    rec->Register("hookcommand",(void*)hookCommandProc);
       
     rec->Register("gaccel",&acreg3);
-    rec->Register("hookcommand",(void*)hookCommandProc);
 
     rec->Register("gaccel",&acreg4);
-    rec->Register("hookcommand",(void*)hookCommandProc);
+    
 
     g_parent = GetMainHwnd();
 
+      
     HMENU hMenu = GetSubMenu(GetMenu(GetMainHwnd()),
 #ifdef _WIN32
 							 0
@@ -553,7 +312,7 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
 #endif
 	  );
       
-    MENUITEMINFO mi={sizeof(MENUITEMINFO),};
+    /*MENUITEMINFO mi={sizeof(MENUITEMINFO),};
     mi.fMask = MIIM_TYPE | MIIM_ID;
     mi.fType = MFT_STRING;
     mi.dwTypeData = "Import Ultraschall chapter file";
@@ -587,6 +346,13 @@ REAPER_PLUGIN_DLL_EXPORT int REAPER_PLUGIN_ENTRYPOINT(REAPER_PLUGIN_HINSTANCE hI
       mi5.dwTypeData = "Export Ultraschall Shownotes";
       mi5.wID = g_registered_command_04;
       InsertMenuItem(hMenu, 11, TRUE, &mi5);
+    
+      MENUITEMINFO mi6={sizeof(MENUITEMINFO),};
+      mi6.fMask = MIIM_TYPE | MIIM_ID;
+      mi6.fType = MFT_STRING;
+      mi6.dwTypeData = "Export Ultraschall Shownotes";
+      mi6.wID = g_registered_command_05;
+      InsertMenuItem(hMenu, 12, TRUE, &mi6);*/
 
     // our plugin registered, return success
 
