@@ -14,6 +14,8 @@
 		E9EBFB1F190A8D9C00157ACA /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = E9EBFB1D190A8D9C00157ACA /* tinyxml2.h */; };
 		F07B48C21916315F0026FEE2 /* reaper.h in Headers */ = {isa = PBXBuildFile; fileRef = F07B48C11916315F0026FEE2 /* reaper.h */; };
 		F0BD521F19165A0400FEFC77 /* Shownote_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = F0BD521D19165A0400FEFC77 /* Shownote_functions.h */; };
+		F0ED6FB119320C65006387DD /* openPanel_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = F0ED6FAF19320C65006387DD /* openPanel_wrapper.h */; };
+		F0ED6FB219320C65006387DD /* openPanel_wrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = F0ED6FB019320C65006387DD /* openPanel_wrapper.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,12 +26,15 @@
 		E9EBFB1C190A8D9C00157ACA /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
 		E9EBFB1D190A8D9C00157ACA /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		E9F2C9AD19039E5A0069ADC6 /* reaper_plugin_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = reaper_plugin_functions.h; path = ../../../../../../Applications/reaper_plugin_functions.h; sourceTree = "<group>"; };
+		F02E39DB19330A97002FF226 /* openPanel_connector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = openPanel_connector.h; sourceTree = "<group>"; };
 		F07B48C11916315F0026FEE2 /* reaper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reaper.h; sourceTree = "<group>"; };
 		F07B48C3191632170026FEE2 /* textfunc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textfunc.cpp; sourceTree = "<group>"; };
 		F0BD521D19165A0400FEFC77 /* Shownote_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shownote_functions.h; sourceTree = "<group>"; };
 		F0BD522019165CEC00FEFC77 /* Chapter_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Chapter_functions.h; sourceTree = "<group>"; };
 		F0CDE3B419185110007A77C4 /* res.rc */ = {isa = PBXFileReference; lastKnownFileType = text; path = res.rc; sourceTree = "<group>"; };
 		F0CDE3B519185110007A77C4 /* res.rc_mac_dlg */ = {isa = PBXFileReference; lastKnownFileType = text; path = res.rc_mac_dlg; sourceTree = "<group>"; };
+		F0ED6FAF19320C65006387DD /* openPanel_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = openPanel_wrapper.h; sourceTree = "<group>"; };
+		F0ED6FB019320C65006387DD /* openPanel_wrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = openPanel_wrapper.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +88,9 @@
 			isa = PBXGroup;
 			children = (
 				F0BD521D19165A0400FEFC77 /* Shownote_functions.h */,
+				F0ED6FAF19320C65006387DD /* openPanel_wrapper.h */,
+				F0ED6FB019320C65006387DD /* openPanel_wrapper.mm */,
+				F02E39DB19330A97002FF226 /* openPanel_connector.h */,
 			);
 			name = Shownotes;
 			sourceTree = "<group>";
@@ -111,6 +119,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0ED6FB119320C65006387DD /* openPanel_wrapper.h in Headers */,
 				E9EBFB1F190A8D9C00157ACA /* tinyxml2.h in Headers */,
 				F07B48C21916315F0026FEE2 /* reaper.h in Headers */,
 				F0BD521F19165A0400FEFC77 /* Shownote_functions.h in Headers */,
@@ -184,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9EBFB1E190A8D9C00157ACA /* tinyxml2.cpp in Sources */,
+				F0ED6FB219320C65006387DD /* openPanel_wrapper.mm in Sources */,
 				3327DE960E955E1E001FCE4E /* main.cpp in Sources */,
 				3327DE980E955E2E001FCE4E /* swell-modstub.mm in Sources */,
 			);

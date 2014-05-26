@@ -99,7 +99,7 @@ void exportChapters()
     
     std::string sProjectName = std::string(projectName);
     auto chapterFilename = sProjectName.substr( 0, sProjectName.find('.', 0) );
-    std::ofstream chapterFile(chapterFilename + ".mp4chaps", std::ios::app);
+    std::ofstream chapterFile(chapterFilename + ".mp4chaps", std::ios::out);
     
     for (std::vector<std::string>::iterator iter = chapterLines.begin(); iter != chapterLines.end(); ++iter)
     {
@@ -109,6 +109,10 @@ void exportChapters()
     
     
     chapterFile.close();
+    
+    char buffer[4096];
+    sprintf(buffer, "The file was saved in:\n%s", (chapterFilename + ".mp4chaps").c_str());
+    ShowMessageBox(buffer, "Chapter file saved", 0);
     
     free(charStr);
     free(projectName);
@@ -155,6 +159,10 @@ void exportChaptersAsSimpleChapters()
     chapterFilename.append(".simplechapters");
     
     doc.SaveFile(chapterFilename.c_str());
+    
+    char buffer[4096];
+    sprintf(buffer, "The file was saved in:\n%s", chapterFilename.c_str());
+    ShowMessageBox(buffer, "Chapter file saved", 0);
     
     free(charStr);
     free(projectName);
@@ -212,7 +220,7 @@ void ImportChapters()
     //ShowMessageBox("Test", "Hallo Ralf. Sag mal ob Du das siehst", 0);
     
     //auto ggg = GetUserFileNameForRead(selectedImportPath, "Load Chapter File", "mp4chaps");
-    if(GetUserFileNameForRead(selectedImportPath, "Load Chapter File", ".txt"))
+    if(GetUserFileNameForRead(selectedImportPath, "Load Chapter File", ".mp4chaps"))
         readChapterFile(selectedImportPath, track);
     
     free(selectedImportPath);

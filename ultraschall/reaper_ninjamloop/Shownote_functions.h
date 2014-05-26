@@ -10,7 +10,7 @@
 #define __reaper_Ultraschall__Shownote_functions__
 
 #include "reaper.h"
-
+#include "openPanel_connector.h"
 
 struct shownoteData
 {
@@ -30,6 +30,8 @@ void exportShownotes()
         ShowMessageBox("The Project was not safed", "Project location error", 0);
         return;
     }
+    
+    
     
     MediaTrack* track = getTrackByName("Shownotes");
     char* charStr = new char[4096];
@@ -61,7 +63,7 @@ void exportShownotes()
     
     std::string sProjectName = std::string(projectName);
     auto chapterFilename = sProjectName.substr( 0, sProjectName.find('.', 0) );
-    std::ofstream chapterFile(chapterFilename + ".shownotes", std::ios::app);
+    std::ofstream chapterFile(chapterFilename + ".shownotes", std::ios::out);
     
     for (std::vector<std::string>::iterator iter = chapterLines.begin(); iter != chapterLines.end(); ++iter)
     {
@@ -72,10 +74,12 @@ void exportShownotes()
     
     chapterFile.close();
     
+    char buffer[4096];
+    sprintf(buffer, "The file was saved in:\n%s", (chapterFilename + ".shownotes").c_str());
+    ShowMessageBox(buffer, "Shownotes file saved", 0);
+    
     delete charStr;
     delete projectName;
-    
-    ShowMessageBox("Shownotes exported", "Project location error", 0);
     
 }
 
@@ -226,9 +230,10 @@ void ImportShowNotes()
         GetSetMediaTrackInfo(track, "P_NAME", shownoteTrackName);
     }
     
+    openPanel();
     
-    if(GetUserFileNameForRead(selectedImportPath, "Load Shownote File", ".txt"))
-        readShownoteFile(selectedImportPath, track);
+    //if(GetUserFileNameForRead(selectedImportPath, "Load Shownote File", ".osf"))
+    //    readShownoteFile(selectedImportPath, track);
     
     free(selectedImportPath);
 }

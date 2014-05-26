@@ -67,8 +67,8 @@ MediaTrack* getTrackByName(char* trackName)
 
 struct time
 {
-    int ms, s, m, h = NULL;
-    
+    int s, m, h = NULL;
+    std::string ms = "";
 };
 
 std::string _format_time(char* aTime)
@@ -88,9 +88,10 @@ std::string _format_time(char* aTime)
     std::reverse(items.begin(), items.end());
     
     struct time times;
-    times.ms =     times.s =     times.m =     times.h = 0;
     
-    times.ms = std::atoi(items[0].substr(items[0].find("."), std::string::npos).c_str());
+    times.s =     times.m =     times.h = 0;
+    
+    times.ms = items[0].substr(items[0].find("."), std::string::npos).c_str();
     items[0].erase(items[0].find("."), std::string::npos);
     
     
@@ -114,7 +115,7 @@ std::string _format_time(char* aTime)
     
     char buffer[13];
     
-    sprintf(buffer, "%02d:%02d:%02d.%03d", times.h, times.m, times.s, times.ms);
+    sprintf(buffer, "%02d:%02d:%02d%s", times.h, times.m, times.s, times.ms.c_str());
     
     return std::string(buffer);
     
