@@ -7,9 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#include "openPanel_connector.h"
 
 @interface openPanel_wrapper : NSObject
 
-+(void)foo;
++(const char*)foo: (importtype_t) importtype;
++(const char*)bar: (importtype_t) importtype;
 
 @end

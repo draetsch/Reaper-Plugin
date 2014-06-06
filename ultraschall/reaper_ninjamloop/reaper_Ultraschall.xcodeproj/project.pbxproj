@@ -65,6 +65,7 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				F00D07B51942779E00ADA492 /* openPanelWrapper */,
 				F0BD522119165D8400FEFC77 /* External */,
 				F0BD521B191659E900FEFC77 /* Chapter */,
 				F0BD521A191659DB00FEFC77 /* Shownotes */,
@@ -84,13 +85,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		F00D07B51942779E00ADA492 /* openPanelWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				F0ED6FAF19320C65006387DD /* openPanel_wrapper.h */,
+				F0ED6FB019320C65006387DD /* openPanel_wrapper.mm */,
+				F02E39DB19330A97002FF226 /* openPanel_connector.h */,
+			);
+			name = openPanelWrapper;
+			sourceTree = "<group>";
+		};
 		F0BD521A191659DB00FEFC77 /* Shownotes */ = {
 			isa = PBXGroup;
 			children = (
 				F0BD521D19165A0400FEFC77 /* Shownote_functions.h */,
-				F0ED6FAF19320C65006387DD /* openPanel_wrapper.h */,
-				F0ED6FB019320C65006387DD /* openPanel_wrapper.mm */,
-				F02E39DB19330A97002FF226 /* openPanel_connector.h */,
 			);
 			name = Shownotes;
 			sourceTree = "<group>";

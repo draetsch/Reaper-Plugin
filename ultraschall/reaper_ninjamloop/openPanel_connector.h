@@ -9,6 +9,9 @@
 #ifndef reaper_Ultraschall_openPanel_connector_h
 #define reaper_Ultraschall_openPanel_connector_h
 
-void openPanel();
+typedef enum {CHAPTERS, SHOWNOTES} importtype_t;
+
+char* openPanel(importtype_t);
+void savePanel(importtype_t);
 
 #endif

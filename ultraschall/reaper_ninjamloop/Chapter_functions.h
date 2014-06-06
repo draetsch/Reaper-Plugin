@@ -10,6 +10,7 @@
 #define reaper_Ultraschall_Chapter_functions_h
 
 #include "reaper.h"
+#include "openPanel_connector.h"
 
 /*struct time
 {
@@ -206,24 +207,22 @@ void readChapterFile(char* fileName, MediaTrack* track )
 void ImportChapters()
 {
     char* chapterTrackName = "Chapters";
-    char* selectedImportPath = new char[4096];
     
-    MediaTrack* track = getTrackByName("Chapters");
-    
-    if(!track)
-    {
-        InsertTrackAtIndex(0, true);
-        track = GetTrack(0,0);
-        GetSetMediaTrackInfo(track, "P_NAME", chapterTrackName);
+    auto path = openPanel(CHAPTERS);
+    if(path) {
+        MediaTrack* track = getTrackByName("Chapters");
+        if(!track)
+        {
+            InsertTrackAtIndex(0, true);
+            track = GetTrack(0,0);
+            GetSetMediaTrackInfo(track, "P_NAME", chapterTrackName);
+        }
+
+        readChapterFile(path, track);
     }
     
-    //ShowMessageBox("Test", "Hallo Ralf. Sag mal ob Du das siehst", 0);
     
-    //auto ggg = GetUserFileNameForRead(selectedImportPath, "Load Chapter File", "mp4chaps");
-    if(GetUserFileNameForRead(selectedImportPath, "Load Chapter File", ".mp4chaps"))
-        readChapterFile(selectedImportPath, track);
-    
-    free(selectedImportPath);
+    //free(path);
     
 }
 

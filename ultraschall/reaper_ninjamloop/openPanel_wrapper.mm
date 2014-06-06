@@ -11,51 +11,55 @@
 
 @implementation openPanel_wrapper
 
-+(void) foo
++(void) bar: (importtype_t) importtype
+{
+    NSSavePanel* savePanel = [NSSavePanel savePanel];
+    NSArray* types = [[NSArray alloc] initWithObjects:@"osf", @"mp4chaps", nil];
+    [savePanel allowedFileTypes:types];
+    
+    NSInteger fgfgf = [savePanel runModal];
+    id hhhhh = 0;
+}
+
++(const char *) foo: (importtype_t) importtype
 {
 
     NSOpenPanel* p = [NSOpenPanel openPanel];
+    NSArray *types;
     
-    NSArray *types = [[NSArray alloc] initWithObjects:@"*.osf", @"*.txt", nil];
+    if(importtype == SHOWNOTES)
+        types = [[NSArray alloc] initWithObjects:@"osf", @"txt", @"OSF", @"TXT", nil];
     
-    //[p delegate: self];
+    if(importtype == CHAPTERS)
+        types = [[NSArray alloc] initWithObjects:@"mp4chaps", @"txt", @"MP4CHAPS", @"TXT", nil];
+    
     [p setCanChooseDirectories:NO];
     [p setCanChooseFiles:YES];
     [p setAllowsMultipleSelection:NO];
-    [p setAllowsOtherFileTypes:NO];
     [p setAllowedFileTypes:types];
     
-    if([p runModal] == NSOKButton)
+    if([p runModalForTypes:types] == NSOKButton)
     {
-        int zzz = 0;
-    }
-}
-
--(BOOL)panel:(id)sender shouldShowFilename:(NSString *)filename
-{
-    NSString* ext = [filename pathExtension];
-    if ([ext  isEqual: @""] || [ext  isEqual: @"/"] || ext == nil || ext == NULL || [ext length] < 1) {
-        return TRUE;
+        return [[[p URLs] firstObject] fileSystemRepresentation];
     }
     
-    NSLog(@"Ext: '%@'", ext);
-    
-    NSEnumerator* tagEnumerator = [[NSArray arrayWithObjects:@"osf", @"txt", nil] objectEnumerator];
-    NSString* allowedExt;
-    while ((allowedExt = [tagEnumerator nextObject]))
-    {
-        if ([ext caseInsensitiveCompare:allowedExt] == NSOrderedSame)
-        {
-            return TRUE;
-        }
-    }
-    
-    return FALSE;
+    return NULL;
 }
 
 @end
 
-void openPanel()
+void savePanel(importtype_t importtype)
 {
-    [openPanel_wrapper foo];
+    [openPanel_wrapper bar: importtype];
+}
+
+char* openPanel(importtype_t importtype)
+{
+    
+    const char* r = [openPanel_wrapper foo: importtype];
+    if(!r)
+        return NULL;
+    
+    return (char*)r;
+    
 }

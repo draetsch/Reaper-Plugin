@@ -219,23 +219,22 @@ void readShownoteFile(char* fileName, MediaTrack* track)
 void ImportShowNotes()
 {
     char* shownoteTrackName = "Shownotes";
-    char* selectedImportPath = new char[4096];
     
-    MediaTrack* track = getTrackByName("Shownotes");
-    
-    if(!track)
-    {
-        InsertTrackAtIndex(0, true);
-        track = GetTrack(0,0);
-        GetSetMediaTrackInfo(track, "P_NAME", shownoteTrackName);
+    auto path = openPanel(SHOWNOTES);
+    if(path) {
+        MediaTrack* track = getTrackByName("Shownotes");
+        if(!track)
+        {
+            InsertTrackAtIndex(0, true);
+            track = GetTrack(0,0);
+            GetSetMediaTrackInfo(track, "P_NAME", shownoteTrackName);
+        }
+        
+        readShownoteFile(path, track);
     }
     
-    openPanel();
-    
-    //if(GetUserFileNameForRead(selectedImportPath, "Load Shownote File", ".osf"))
-    //    readShownoteFile(selectedImportPath, track);
-    
-    free(selectedImportPath);
+
+    //free(path);
 }
 
 #endif /* defined(__reaper_Ultraschall__Shownote_functions__) */
