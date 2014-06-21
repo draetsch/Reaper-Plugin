@@ -1,0 +1,485 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		28F0EE861955F74C003BF618 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F0EE851955F74C003BF618 /* Cocoa.framework */; };
+		28F0EE971955F74C003BF618 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F0EE961955F74C003BF618 /* XCTest.framework */; };
+		28F0EE981955F74C003BF618 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F0EE851955F74C003BF618 /* Cocoa.framework */; };
+		28F0EE9B1955F74C003BF618 /* Reaper Plugin.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F0EE821955F74C003BF618 /* Reaper Plugin.dylib */; };
+		28F0EEA11955F74C003BF618 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28F0EE9F1955F74C003BF618 /* InfoPlist.strings */; };
+		28F0EEA31955F74C003BF618 /* Reaper_PluginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EEA21955F74C003BF618 /* Reaper_PluginTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		28F0EE991955F74C003BF618 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 28F0EE7A1955F74C003BF618 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 28F0EE811955F74C003BF618;
+			remoteInfo = "Reaper Plugin";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		28F0EE821955F74C003BF618 /* Reaper Plugin.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "Reaper Plugin.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
+		28F0EE851955F74C003BF618 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		28F0EE881955F74C003BF618 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		28F0EE891955F74C003BF618 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		28F0EE8A1955F74C003BF618 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		28F0EE8D1955F74C003BF618 /* Reaper Plugin-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Reaper Plugin-Prefix.pch"; sourceTree = "<group>"; };
+		28F0EE951955F74C003BF618 /* Reaper PluginTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Reaper PluginTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		28F0EE961955F74C003BF618 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		28F0EE9E1955F74C003BF618 /* Reaper PluginTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Reaper PluginTests-Info.plist"; sourceTree = "<group>"; };
+		28F0EEA01955F74C003BF618 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		28F0EEA21955F74C003BF618 /* Reaper_PluginTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reaper_PluginTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		28F0EE7F1955F74C003BF618 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28F0EE861955F74C003BF618 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28F0EE921955F74C003BF618 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28F0EE9B1955F74C003BF618 /* Reaper Plugin.dylib in Frameworks */,
+				28F0EE981955F74C003BF618 /* Cocoa.framework in Frameworks */,
+				28F0EE971955F74C003BF618 /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		28F0EE791955F74C003BF618 = {
+			isa = PBXGroup;
+			children = (
+				28F0EE8B1955F74C003BF618 /* Reaper Plugin */,
+				28F0EE9C1955F74C003BF618 /* Reaper PluginTests */,
+				28F0EE841955F74C003BF618 /* Frameworks */,
+				28F0EE831955F74C003BF618 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		28F0EE831955F74C003BF618 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				28F0EE821955F74C003BF618 /* Reaper Plugin.dylib */,
+				28F0EE951955F74C003BF618 /* Reaper PluginTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		28F0EE841955F74C003BF618 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				28F0EE851955F74C003BF618 /* Cocoa.framework */,
+				28F0EE961955F74C003BF618 /* XCTest.framework */,
+				28F0EE871955F74C003BF618 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		28F0EE871955F74C003BF618 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				28F0EE881955F74C003BF618 /* Foundation.framework */,
+				28F0EE891955F74C003BF618 /* CoreData.framework */,
+				28F0EE8A1955F74C003BF618 /* AppKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		28F0EE8B1955F74C003BF618 /* Reaper Plugin */ = {
+			isa = PBXGroup;
+			children = (
+				28F0EEAD1955F848003BF618 /* Reaper */,
+				28F0EEAC1955F83C003BF618 /* Ultraschall-Platform */,
+				28F0EE8C1955F74C003BF618 /* Supporting Files */,
+			);
+			path = "Reaper Plugin";
+			sourceTree = "<group>";
+		};
+		28F0EE8C1955F74C003BF618 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				28F0EE8D1955F74C003BF618 /* Reaper Plugin-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		28F0EE9C1955F74C003BF618 /* Reaper PluginTests */ = {
+			isa = PBXGroup;
+			children = (
+				28F0EEA21955F74C003BF618 /* Reaper_PluginTests.m */,
+				28F0EE9D1955F74C003BF618 /* Supporting Files */,
+			);
+			path = "Reaper PluginTests";
+			sourceTree = "<group>";
+		};
+		28F0EE9D1955F74C003BF618 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				28F0EE9E1955F74C003BF618 /* Reaper PluginTests-Info.plist */,
+				28F0EE9F1955F74C003BF618 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		28F0EEAC1955F83C003BF618 /* Ultraschall-Platform */ = {
+			isa = PBXGroup;
+			children = (
+				28F0EEB11955F886003BF618 /* Chapter */,
+				28F0EEB21955F88C003BF618 /* Shownote */,
+			);
+			name = "Ultraschall-Platform";
+			sourceTree = "<group>";
+		};
+		28F0EEAD1955F848003BF618 /* Reaper */ = {
+			isa = PBXGroup;
+			children = (
+				28F0EEB01955F865003BF618 /* Extension */,
+				28F0EEAF1955F853003BF618 /* Gateway */,
+				28F0EEAE1955F84C003BF618 /* UserInterface */,
+			);
+			name = Reaper;
+			sourceTree = "<group>";
+		};
+		28F0EEAE1955F84C003BF618 /* UserInterface */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = UserInterface;
+			sourceTree = "<group>";
+		};
+		28F0EEAF1955F853003BF618 /* Gateway */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Gateway;
+			sourceTree = "<group>";
+		};
+		28F0EEB01955F865003BF618 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Extension;
+			sourceTree = "<group>";
+		};
+		28F0EEB11955F886003BF618 /* Chapter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Chapter;
+			sourceTree = "<group>";
+		};
+		28F0EEB21955F88C003BF618 /* Shownote */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Shownote;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		28F0EE801955F74C003BF618 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		28F0EE811955F74C003BF618 /* reaper_Ultraschall */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28F0EEA61955F74C003BF618 /* Build configuration list for PBXNativeTarget "reaper_Ultraschall" */;
+			buildPhases = (
+				28F0EE7E1955F74C003BF618 /* Sources */,
+				28F0EE7F1955F74C003BF618 /* Frameworks */,
+				28F0EE801955F74C003BF618 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = reaper_Ultraschall;
+			productName = "Reaper Plugin";
+			productReference = 28F0EE821955F74C003BF618 /* Reaper Plugin.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		28F0EE941955F74C003BF618 /* Reaper PluginTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28F0EEA91955F74C003BF618 /* Build configuration list for PBXNativeTarget "Reaper PluginTests" */;
+			buildPhases = (
+				28F0EE911955F74C003BF618 /* Sources */,
+				28F0EE921955F74C003BF618 /* Frameworks */,
+				28F0EE931955F74C003BF618 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				28F0EE9A1955F74C003BF618 /* PBXTargetDependency */,
+			);
+			name = "Reaper PluginTests";
+			productName = "Reaper PluginTests";
+			productReference = 28F0EE951955F74C003BF618 /* Reaper PluginTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		28F0EE7A1955F74C003BF618 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = Ultraschall;
+				TargetAttributes = {
+					28F0EE941955F74C003BF618 = {
+						TestTargetID = 28F0EE811955F74C003BF618;
+					};
+				};
+			};
+			buildConfigurationList = 28F0EE7D1955F74C003BF618 /* Build configuration list for PBXProject "Reaper Plugin" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 28F0EE791955F74C003BF618;
+			productRefGroup = 28F0EE831955F74C003BF618 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				28F0EE811955F74C003BF618 /* reaper_Ultraschall */,
+				28F0EE941955F74C003BF618 /* Reaper PluginTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		28F0EE931955F74C003BF618 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28F0EEA11955F74C003BF618 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		28F0EE7E1955F74C003BF618 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28F0EE911955F74C003BF618 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28F0EEA31955F74C003BF618 /* Reaper_PluginTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		28F0EE9A1955F74C003BF618 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 28F0EE811955F74C003BF618 /* reaper_Ultraschall */;
+			targetProxy = 28F0EE991955F74C003BF618 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		28F0EE9F1955F74C003BF618 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				28F0EEA01955F74C003BF618 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		28F0EEA41955F74C003BF618 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		28F0EEA51955F74C003BF618 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		28F0EEA71955F74C003BF618 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Reaper Plugin/Reaper Plugin-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		28F0EEA81955F74C003BF618 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Reaper Plugin/Reaper Plugin-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		28F0EEAA1955F74C003BF618 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Reaper Plugin.dylib";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Reaper Plugin/Reaper Plugin-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Reaper PluginTests/Reaper PluginTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		28F0EEAB1955F74C003BF618 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Reaper Plugin.dylib";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Reaper Plugin/Reaper Plugin-Prefix.pch";
+				INFOPLIST_FILE = "Reaper PluginTests/Reaper PluginTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		28F0EE7D1955F74C003BF618 /* Build configuration list for PBXProject "Reaper Plugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28F0EEA41955F74C003BF618 /* Debug */,
+				28F0EEA51955F74C003BF618 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		28F0EEA61955F74C003BF618 /* Build configuration list for PBXNativeTarget "reaper_Ultraschall" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28F0EEA71955F74C003BF618 /* Debug */,
+				28F0EEA81955F74C003BF618 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		28F0EEA91955F74C003BF618 /* Build configuration list for PBXNativeTarget "Reaper PluginTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28F0EEAA1955F74C003BF618 /* Debug */,
+				28F0EEAB1955F74C003BF618 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 28F0EE7A1955F74C003BF618 /* Project object */;
+}
