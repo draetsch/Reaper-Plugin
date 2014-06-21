@@ -1,6 +1,6 @@
 //
-//  Reaper_PluginTests.m
-//  Reaper PluginTests
+//  Ultraschall_Tests.m
+//  Ultraschall Tests
 //
 //  Created by Daniel Lindenfelser on 21.06.14.
 //  Copyright (c) 2014 Ultraschall. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface Reaper_PluginTests : XCTestCase
+@interface Ultraschall_Tests : XCTestCase
 
 @end
 
-@implementation Reaper_PluginTests
+@implementation Ultraschall_Tests
 
 - (void)setUp
 {

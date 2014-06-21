@@ -8,35 +8,46 @@
 
 /* Begin PBXBuildFile section */
 		28F0EE861955F74C003BF618 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F0EE851955F74C003BF618 /* Cocoa.framework */; };
-		28F0EE971955F74C003BF618 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F0EE961955F74C003BF618 /* XCTest.framework */; };
-		28F0EE981955F74C003BF618 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F0EE851955F74C003BF618 /* Cocoa.framework */; };
-		28F0EE9B1955F74C003BF618 /* Reaper Plugin.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F0EE821955F74C003BF618 /* Reaper Plugin.dylib */; };
-		28F0EEA11955F74C003BF618 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28F0EE9F1955F74C003BF618 /* InfoPlist.strings */; };
-		28F0EEA31955F74C003BF618 /* Reaper_PluginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EEA21955F74C003BF618 /* Reaper_PluginTests.m */; };
+		28F0EEDA19560665003BF618 /* reaper_plugin_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F0EED819560665003BF618 /* reaper_plugin_functions.h */; };
+		28F0EEDB19560665003BF618 /* reaper_plugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F0EED919560665003BF618 /* reaper_plugin.h */; };
+		28F0EEDE195606F6003BF618 /* reaper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EEDC195606F6003BF618 /* reaper.cpp */; };
+		28F0EEDF195606F6003BF618 /* reaper.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F0EEDD195606F6003BF618 /* reaper.h */; };
+		28F0EEE419560759003BF618 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EEE219560759003BF618 /* tinyxml2.cpp */; };
+		28F0EEE519560759003BF618 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F0EEE319560759003BF618 /* tinyxml2.h */; };
+		28F0EEEB1956086D003BF618 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F0EE961955F74C003BF618 /* XCTest.framework */; };
+		28F0EEF11956086D003BF618 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28F0EEEF1956086D003BF618 /* InfoPlist.strings */; };
+		28F0EEF31956086D003BF618 /* Ultraschall_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EEF21956086D003BF618 /* Ultraschall_Tests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		28F0EE991955F74C003BF618 /* PBXContainerItemProxy */ = {
+		28F0EEF51956086D003BF618 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 28F0EE7A1955F74C003BF618 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 28F0EE811955F74C003BF618;
-			remoteInfo = "Reaper Plugin";
+			remoteInfo = reaper_Ultraschall;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		28F0EE821955F74C003BF618 /* Reaper Plugin.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "Reaper Plugin.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
+		28F0EE821955F74C003BF618 /* reaper_Ultraschall.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = reaper_Ultraschall.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F0EE851955F74C003BF618 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		28F0EE881955F74C003BF618 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		28F0EE891955F74C003BF618 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		28F0EE8A1955F74C003BF618 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		28F0EE8D1955F74C003BF618 /* Reaper Plugin-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Reaper Plugin-Prefix.pch"; sourceTree = "<group>"; };
-		28F0EE951955F74C003BF618 /* Reaper PluginTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Reaper PluginTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F0EE961955F74C003BF618 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		28F0EE9E1955F74C003BF618 /* Reaper PluginTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Reaper PluginTests-Info.plist"; sourceTree = "<group>"; };
-		28F0EEA01955F74C003BF618 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		28F0EEA21955F74C003BF618 /* Reaper_PluginTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reaper_PluginTests.m; sourceTree = "<group>"; };
+		28F0EED819560665003BF618 /* reaper_plugin_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reaper_plugin_functions.h; sourceTree = "<group>"; };
+		28F0EED919560665003BF618 /* reaper_plugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reaper_plugin.h; sourceTree = "<group>"; };
+		28F0EEDC195606F6003BF618 /* reaper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = reaper.cpp; sourceTree = "<group>"; };
+		28F0EEDD195606F6003BF618 /* reaper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reaper.h; sourceTree = "<group>"; };
+		28F0EEE219560759003BF618 /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml2.cpp; path = ../../External/tinyxml2/tinyxml2.cpp; sourceTree = "<group>"; };
+		28F0EEE319560759003BF618 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinyxml2.h; path = ../../External/tinyxml2/tinyxml2.h; sourceTree = "<group>"; };
+		28F0EEEA1956086D003BF618 /* Ultraschall Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ultraschall Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		28F0EEEE1956086D003BF618 /* Ultraschall Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Ultraschall Tests-Info.plist"; sourceTree = "<group>"; };
+		28F0EEF01956086D003BF618 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		28F0EEF21956086D003BF618 /* Ultraschall_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Ultraschall_Tests.m; sourceTree = "<group>"; };
+		28F0EEF41956086D003BF618 /* Ultraschall Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ultraschall Tests-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,13 +59,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		28F0EE921955F74C003BF618 /* Frameworks */ = {
+		28F0EEE71956086D003BF618 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28F0EE9B1955F74C003BF618 /* Reaper Plugin.dylib in Frameworks */,
-				28F0EE981955F74C003BF618 /* Cocoa.framework in Frameworks */,
-				28F0EE971955F74C003BF618 /* XCTest.framework in Frameworks */,
+				28F0EEEB1956086D003BF618 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,7 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				28F0EE8B1955F74C003BF618 /* Reaper Plugin */,
-				28F0EE9C1955F74C003BF618 /* Reaper PluginTests */,
+				28F0EEEC1956086D003BF618 /* Tests */,
 				28F0EE841955F74C003BF618 /* Frameworks */,
 				28F0EE831955F74C003BF618 /* Products */,
 			);
@@ -74,8 +83,8 @@
 		28F0EE831955F74C003BF618 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				28F0EE821955F74C003BF618 /* Reaper Plugin.dylib */,
-				28F0EE951955F74C003BF618 /* Reaper PluginTests.xctest */,
+				28F0EE821955F74C003BF618 /* reaper_Ultraschall.dylib */,
+				28F0EEEA1956086D003BF618 /* Ultraschall Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,25 +122,9 @@
 		28F0EE8C1955F74C003BF618 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				28F0EEE119560740003BF618 /* tinyxml2 */,
+				28F0EEE019560735003BF618 /* WDL */,
 				28F0EE8D1955F74C003BF618 /* Reaper Plugin-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		28F0EE9C1955F74C003BF618 /* Reaper PluginTests */ = {
-			isa = PBXGroup;
-			children = (
-				28F0EEA21955F74C003BF618 /* Reaper_PluginTests.m */,
-				28F0EE9D1955F74C003BF618 /* Supporting Files */,
-			);
-			path = "Reaper PluginTests";
-			sourceTree = "<group>";
-		};
-		28F0EE9D1955F74C003BF618 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				28F0EE9E1955F74C003BF618 /* Reaper PluginTests-Info.plist */,
-				28F0EE9F1955F74C003BF618 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -148,6 +141,10 @@
 		28F0EEAD1955F848003BF618 /* Reaper */ = {
 			isa = PBXGroup;
 			children = (
+				28F0EEDD195606F6003BF618 /* reaper.h */,
+				28F0EED919560665003BF618 /* reaper_plugin.h */,
+				28F0EED819560665003BF618 /* reaper_plugin_functions.h */,
+				28F0EEDC195606F6003BF618 /* reaper.cpp */,
 				28F0EEB01955F865003BF618 /* Extension */,
 				28F0EEAF1955F853003BF618 /* Gateway */,
 				28F0EEAE1955F84C003BF618 /* UserInterface */,
@@ -190,6 +187,42 @@
 			name = Shownote;
 			sourceTree = "<group>";
 		};
+		28F0EEE019560735003BF618 /* WDL */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = WDL;
+			sourceTree = "<group>";
+		};
+		28F0EEE119560740003BF618 /* tinyxml2 */ = {
+			isa = PBXGroup;
+			children = (
+				28F0EEE219560759003BF618 /* tinyxml2.cpp */,
+				28F0EEE319560759003BF618 /* tinyxml2.h */,
+			);
+			name = tinyxml2;
+			sourceTree = "<group>";
+		};
+		28F0EEEC1956086D003BF618 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				28F0EEF21956086D003BF618 /* Ultraschall_Tests.m */,
+				28F0EEED1956086D003BF618 /* Supporting Files */,
+			);
+			name = Tests;
+			path = "Ultraschall Tests";
+			sourceTree = "<group>";
+		};
+		28F0EEED1956086D003BF618 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				28F0EEEE1956086D003BF618 /* Ultraschall Tests-Info.plist */,
+				28F0EEEF1956086D003BF618 /* InfoPlist.strings */,
+				28F0EEF41956086D003BF618 /* Ultraschall Tests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -197,6 +230,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28F0EEDB19560665003BF618 /* reaper_plugin.h in Headers */,
+				28F0EEDA19560665003BF618 /* reaper_plugin_functions.h in Headers */,
+				28F0EEDF195606F6003BF618 /* reaper.h in Headers */,
+				28F0EEE519560759003BF618 /* tinyxml2.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,25 +254,25 @@
 			);
 			name = reaper_Ultraschall;
 			productName = "Reaper Plugin";
-			productReference = 28F0EE821955F74C003BF618 /* Reaper Plugin.dylib */;
+			productReference = 28F0EE821955F74C003BF618 /* reaper_Ultraschall.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
-		28F0EE941955F74C003BF618 /* Reaper PluginTests */ = {
+		28F0EEE91956086D003BF618 /* Ultraschall Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 28F0EEA91955F74C003BF618 /* Build configuration list for PBXNativeTarget "Reaper PluginTests" */;
+			buildConfigurationList = 28F0EEF71956086D003BF618 /* Build configuration list for PBXNativeTarget "Ultraschall Tests" */;
 			buildPhases = (
-				28F0EE911955F74C003BF618 /* Sources */,
-				28F0EE921955F74C003BF618 /* Frameworks */,
-				28F0EE931955F74C003BF618 /* Resources */,
+				28F0EEE61956086D003BF618 /* Sources */,
+				28F0EEE71956086D003BF618 /* Frameworks */,
+				28F0EEE81956086D003BF618 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				28F0EE9A1955F74C003BF618 /* PBXTargetDependency */,
+				28F0EEF61956086D003BF618 /* PBXTargetDependency */,
 			);
-			name = "Reaper PluginTests";
-			productName = "Reaper PluginTests";
-			productReference = 28F0EE951955F74C003BF618 /* Reaper PluginTests.xctest */;
+			name = "Ultraschall Tests";
+			productName = "Ultraschall Tests";
+			productReference = 28F0EEEA1956086D003BF618 /* Ultraschall Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -247,7 +284,7 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Ultraschall;
 				TargetAttributes = {
-					28F0EE941955F74C003BF618 = {
+					28F0EEE91956086D003BF618 = {
 						TestTargetID = 28F0EE811955F74C003BF618;
 					};
 				};
@@ -265,17 +302,17 @@
 			projectRoot = "";
 			targets = (
 				28F0EE811955F74C003BF618 /* reaper_Ultraschall */,
-				28F0EE941955F74C003BF618 /* Reaper PluginTests */,
+				28F0EEE91956086D003BF618 /* Ultraschall Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		28F0EE931955F74C003BF618 /* Resources */ = {
+		28F0EEE81956086D003BF618 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28F0EEA11955F74C003BF618 /* InfoPlist.strings in Resources */,
+				28F0EEF11956086D003BF618 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,32 +323,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28F0EEE419560759003BF618 /* tinyxml2.cpp in Sources */,
+				28F0EEDE195606F6003BF618 /* reaper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		28F0EE911955F74C003BF618 /* Sources */ = {
+		28F0EEE61956086D003BF618 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28F0EEA31955F74C003BF618 /* Reaper_PluginTests.m in Sources */,
+				28F0EEF31956086D003BF618 /* Ultraschall_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		28F0EE9A1955F74C003BF618 /* PBXTargetDependency */ = {
+		28F0EEF61956086D003BF618 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 28F0EE811955F74C003BF618 /* reaper_Ultraschall */;
-			targetProxy = 28F0EE991955F74C003BF618 /* PBXContainerItemProxy */;
+			targetProxy = 28F0EEF51956086D003BF618 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		28F0EE9F1955F74C003BF618 /* InfoPlist.strings */ = {
+		28F0EEEF1956086D003BF618 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				28F0EEA01955F74C003BF618 /* en */,
+				28F0EEF01956086D003BF618 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -411,42 +450,36 @@
 			};
 			name = Release;
 		};
-		28F0EEAA1955F74C003BF618 /* Debug */ = {
+		28F0EEF81956086D003BF618 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Reaper Plugin.dylib";
-				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Reaper Plugin/Reaper Plugin-Prefix.pch";
+				GCC_PREFIX_HEADER = "Ultraschall Tests/Ultraschall Tests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "Reaper PluginTests/Reaper PluginTests-Info.plist";
+				INFOPLIST_FILE = "Ultraschall Tests/Ultraschall Tests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
-		28F0EEAB1955F74C003BF618 /* Release */ = {
+		28F0EEF91956086D003BF618 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Reaper Plugin.dylib";
-				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Reaper Plugin/Reaper Plugin-Prefix.pch";
-				INFOPLIST_FILE = "Reaper PluginTests/Reaper PluginTests-Info.plist";
+				GCC_PREFIX_HEADER = "Ultraschall Tests/Ultraschall Tests-Prefix.pch";
+				INFOPLIST_FILE = "Ultraschall Tests/Ultraschall Tests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
@@ -470,12 +503,13 @@
 				28F0EEA81955F74C003BF618 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		28F0EEA91955F74C003BF618 /* Build configuration list for PBXNativeTarget "Reaper PluginTests" */ = {
+		28F0EEF71956086D003BF618 /* Build configuration list for PBXNativeTarget "Ultraschall Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				28F0EEAA1955F74C003BF618 /* Debug */,
-				28F0EEAB1955F74C003BF618 /* Release */,
+				28F0EEF81956086D003BF618 /* Debug */,
+				28F0EEF91956086D003BF618 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
