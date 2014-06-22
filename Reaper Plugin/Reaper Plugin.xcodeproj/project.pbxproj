@@ -14,7 +14,6 @@
 		28F0EEF11956086D003BF618 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28F0EEEF1956086D003BF618 /* InfoPlist.strings */; };
 		28F0EEF31956086D003BF618 /* Ultraschall_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EEF21956086D003BF618 /* Ultraschall_Tests.m */; };
 		28F0EF0F19562B0E003BF618 /* swell-modstub.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EF0E19562B0E003BF618 /* swell-modstub.mm */; };
-		28F0EF1319562C43003BF618 /* sws_rpf_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F0EF1219562C43003BF618 /* sws_rpf_wrapper.h */; };
 		28F0EF1719566193003BF618 /* Chapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EEFA195621F2003BF618 /* Chapter.cpp */; };
 		28F0EF1819566196003BF618 /* Shownote.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EEFC19562203003BF618 /* Shownote.cpp */; };
 /* End PBXBuildFile section */
@@ -218,7 +217,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28F0EF1319562C43003BF618 /* sws_rpf_wrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +434,7 @@
 		28F0EEA71955F74C003BF618 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -453,6 +452,7 @@
 		28F0EEA81955F74C003BF618 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
