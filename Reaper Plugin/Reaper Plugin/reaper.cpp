@@ -5,6 +5,9 @@
 //  Created by Daniel Lindenfelser on 21.06.14.
 //
 
+#include <iostream>
+#include <vector>
+
 #define REAPERAPI_DECL
 #include "reaper.h"
 #undef REAPERAPI_DECL
@@ -14,9 +17,6 @@
 #else
 #include "WDL/swell/swell.h"
 #endif
-
-#include <iostream>
-#include <vector>
 
 #include "Chapter.h"
 #include "Shownote.h"
