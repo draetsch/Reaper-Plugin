@@ -3,7 +3,6 @@
 //  Ultraschall Tests
 //
 //  Created by Daniel Lindenfelser on 21.06.14.
-//  Copyright (c) 2014 Ultraschall. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>

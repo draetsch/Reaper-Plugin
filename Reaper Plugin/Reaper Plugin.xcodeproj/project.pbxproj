@@ -8,15 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		28F0EE861955F74C003BF618 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F0EE851955F74C003BF618 /* Cocoa.framework */; };
-		28F0EEDA19560665003BF618 /* reaper_plugin_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F0EED819560665003BF618 /* reaper_plugin_functions.h */; };
-		28F0EEDB19560665003BF618 /* reaper_plugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F0EED919560665003BF618 /* reaper_plugin.h */; };
 		28F0EEDE195606F6003BF618 /* reaper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EEDC195606F6003BF618 /* reaper.cpp */; };
-		28F0EEDF195606F6003BF618 /* reaper.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F0EEDD195606F6003BF618 /* reaper.h */; };
 		28F0EEE419560759003BF618 /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EEE219560759003BF618 /* tinyxml2.cpp */; };
-		28F0EEE519560759003BF618 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F0EEE319560759003BF618 /* tinyxml2.h */; };
 		28F0EEEB1956086D003BF618 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F0EE961955F74C003BF618 /* XCTest.framework */; };
 		28F0EEF11956086D003BF618 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28F0EEEF1956086D003BF618 /* InfoPlist.strings */; };
 		28F0EEF31956086D003BF618 /* Ultraschall_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EEF21956086D003BF618 /* Ultraschall_Tests.m */; };
+		28F0EF0F19562B0E003BF618 /* swell-modstub.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EF0E19562B0E003BF618 /* swell-modstub.mm */; };
+		28F0EF1319562C43003BF618 /* sws_rpf_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F0EF1219562C43003BF618 /* sws_rpf_wrapper.h */; };
+		28F0EF1719566193003BF618 /* Chapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EEFA195621F2003BF618 /* Chapter.cpp */; };
+		28F0EF1819566196003BF618 /* Shownote.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28F0EEFC19562203003BF618 /* Shownote.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +48,12 @@
 		28F0EEF01956086D003BF618 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		28F0EEF21956086D003BF618 /* Ultraschall_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Ultraschall_Tests.m; sourceTree = "<group>"; };
 		28F0EEF41956086D003BF618 /* Ultraschall Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ultraschall Tests-Prefix.pch"; sourceTree = "<group>"; };
+		28F0EEFA195621F2003BF618 /* Chapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chapter.cpp; sourceTree = "<group>"; };
+		28F0EEFC19562203003BF618 /* Shownote.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shownote.cpp; sourceTree = "<group>"; };
+		28F0EF0E19562B0E003BF618 /* swell-modstub.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "swell-modstub.mm"; path = "../../External/WDL/WDL/swell/swell-modstub.mm"; sourceTree = "<group>"; };
+		28F0EF1219562C43003BF618 /* sws_rpf_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sws_rpf_wrapper.h; sourceTree = "<group>"; };
+		28F0EF1519565FA4003BF618 /* Chapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Chapter.h; sourceTree = "<group>"; };
+		28F0EF1619565FAE003BF618 /* Shownote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shownote.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,40 +148,19 @@
 			isa = PBXGroup;
 			children = (
 				28F0EEDD195606F6003BF618 /* reaper.h */,
+				28F0EF1219562C43003BF618 /* sws_rpf_wrapper.h */,
 				28F0EED919560665003BF618 /* reaper_plugin.h */,
 				28F0EED819560665003BF618 /* reaper_plugin_functions.h */,
 				28F0EEDC195606F6003BF618 /* reaper.cpp */,
-				28F0EEB01955F865003BF618 /* Extension */,
-				28F0EEAF1955F853003BF618 /* Gateway */,
-				28F0EEAE1955F84C003BF618 /* UserInterface */,
 			);
 			name = Reaper;
-			sourceTree = "<group>";
-		};
-		28F0EEAE1955F84C003BF618 /* UserInterface */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = UserInterface;
-			sourceTree = "<group>";
-		};
-		28F0EEAF1955F853003BF618 /* Gateway */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Gateway;
-			sourceTree = "<group>";
-		};
-		28F0EEB01955F865003BF618 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Extension;
 			sourceTree = "<group>";
 		};
 		28F0EEB11955F886003BF618 /* Chapter */ = {
 			isa = PBXGroup;
 			children = (
+				28F0EEFA195621F2003BF618 /* Chapter.cpp */,
+				28F0EF1519565FA4003BF618 /* Chapter.h */,
 			);
 			name = Chapter;
 			sourceTree = "<group>";
@@ -183,6 +168,8 @@
 		28F0EEB21955F88C003BF618 /* Shownote */ = {
 			isa = PBXGroup;
 			children = (
+				28F0EEFC19562203003BF618 /* Shownote.cpp */,
+				28F0EF1619565FAE003BF618 /* Shownote.h */,
 			);
 			name = Shownote;
 			sourceTree = "<group>";
@@ -190,6 +177,7 @@
 		28F0EEE019560735003BF618 /* WDL */ = {
 			isa = PBXGroup;
 			children = (
+				28F0EF0E19562B0E003BF618 /* swell-modstub.mm */,
 			);
 			name = WDL;
 			sourceTree = "<group>";
@@ -230,10 +218,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28F0EEDB19560665003BF618 /* reaper_plugin.h in Headers */,
-				28F0EEDA19560665003BF618 /* reaper_plugin_functions.h in Headers */,
-				28F0EEDF195606F6003BF618 /* reaper.h in Headers */,
-				28F0EEE519560759003BF618 /* tinyxml2.h in Headers */,
+				28F0EF1319562C43003BF618 /* sws_rpf_wrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +232,7 @@
 				28F0EE7E1955F74C003BF618 /* Sources */,
 				28F0EE7F1955F74C003BF618 /* Frameworks */,
 				28F0EE801955F74C003BF618 /* Headers */,
+				28F0EF14195652AD003BF618 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -318,13 +304,32 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		28F0EF14195652AD003BF618 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"$CONFIGURATION\" == \"Debug\" ]\nthen\ncp $TARGET_BUILD_DIR/${PRODUCT_NAME}.dylib ~/Library/Application\\ Support/REAPER/UserPlugins/\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		28F0EE7E1955F74C003BF618 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				28F0EEE419560759003BF618 /* tinyxml2.cpp in Sources */,
+				28F0EF0F19562B0E003BF618 /* swell-modstub.mm in Sources */,
 				28F0EEDE195606F6003BF618 /* reaper.cpp in Sources */,
+				28F0EF1819566196003BF618 /* Shownote.cpp in Sources */,
+				28F0EF1719566193003BF618 /* Chapter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,22 +436,31 @@
 		28F0EEA71955F74C003BF618 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Reaper Plugin/Reaper Plugin-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					SWELL_PROVIDED_BY_APP,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = ../External/WDL;
 			};
 			name = Debug;
 		};
 		28F0EEA81955F74C003BF618 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Reaper Plugin/Reaper Plugin-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = SWELL_PROVIDED_BY_APP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = ../External/WDL;
 			};
 			name = Release;
 		};
