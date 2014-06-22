@@ -64,7 +64,7 @@ void ExportShownotes(COMMAND_T*)
     
     
     char* fn = new char[4096];
-    BrowseForSaveFile("ksdfghkdsfgh", NULL, chapterFilename.c_str(), "OSF file (*.mp4chaps)\0*.osf\0", fn, 4096);
+    BrowseForSaveFile("Choose Shownote file...", NULL, chapterFilename.c_str(), "OSF file (*.osf)\0*.osf\0Text file (*.txt)\0*.txt\0", fn, 4096);
     
 
     std::ofstream chapterFile(fn, std::ios::out);
@@ -79,7 +79,7 @@ void ExportShownotes(COMMAND_T*)
     chapterFile.close();
     
     char buffer[4096];
-    sprintf(buffer, "The file was saved in:\n%s", (chapterFilename + ".shownotes").c_str());
+    sprintf(buffer, "The file was saved in:\n%s", fn);
     ShowMessageBox(buffer, "Shownotes file saved", 0);
     
     delete[](charStr);

@@ -50,7 +50,12 @@ void ExportChapters(COMMAND_T*)
     
     std::string sProjectName = std::string(projectName);
     auto chapterFilename = sProjectName.substr( 0, sProjectName.find('.', 0) );
-    std::ofstream chapterFile(chapterFilename + ".mp4chaps", std::ios::out);
+    
+    char* fn = new char[4096];
+    BrowseForSaveFile("Choose Chapter file...", NULL, chapterFilename.c_str(), "Chapter file (*.mp4chaps)\0*.mp4chaps\0Text file (*.txt)\0*.txt\0", fn, 4096);
+    
+    
+    std::ofstream chapterFile(fn, std::ios::out);
     
     for (std::vector<std::string>::iterator iter = chapterLines.begin(); iter != chapterLines.end(); ++iter)
     {
@@ -62,7 +67,7 @@ void ExportChapters(COMMAND_T*)
     chapterFile.close();
     
     char buffer[4096];
-    sprintf(buffer, "The file was saved in:\n%s", (chapterFilename + ".mp4chaps").c_str());
+    sprintf(buffer, "The file was saved in:\n%s", fn);
     ShowMessageBox(buffer, "Chapter file saved", 0);
     
     delete[](charStr);
