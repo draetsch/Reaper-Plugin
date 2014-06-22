@@ -19,7 +19,7 @@
 
 void ExportShownotes(COMMAND_T*)
 {
-    
+
     char *projectName = new char[4096];
     
     EnumProjects(0, projectName, 4096);
@@ -58,10 +58,16 @@ void ExportShownotes(COMMAND_T*)
         
         
     }
-    
+
     std::string sProjectName = std::string(projectName);
     auto chapterFilename = sProjectName.substr( 0, sProjectName.find('.', 0) );
-    std::ofstream chapterFile(chapterFilename + ".shownotes", std::ios::out);
+    
+    
+    char* fn = new char[4096];
+    BrowseForSaveFile("ksdfghkdsfgh", NULL, chapterFilename.c_str(), "OSF file (*.mp4chaps)\0*.osf\0", fn, 4096);
+    
+
+    std::ofstream chapterFile(fn, std::ios::out);
     
     for (std::vector<std::string>::iterator iter = chapterLines.begin(); iter != chapterLines.end(); ++iter)
     {
