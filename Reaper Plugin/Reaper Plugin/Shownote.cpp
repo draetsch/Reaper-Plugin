@@ -9,11 +9,13 @@
 #ifndef __reaper_Ultraschall__Shownote_functions__
 #define __reaper_Ultraschall__Shownote_functions__
 
-#include "Shownote.h"
-#include "reaper.h"
 #include <regex>
 #include <iostream>
 #include <fstream>
+
+#include "Shownote.h"
+
+#include "reaper.h"
 
 void ExportShownotes(COMMAND_T*)
 {
@@ -74,8 +76,8 @@ void ExportShownotes(COMMAND_T*)
     sprintf(buffer, "The file was saved in:\n%s", (chapterFilename + ".shownotes").c_str());
     ShowMessageBox(buffer, "Shownotes file saved", 0);
     
-    delete charStr;
-    delete projectName;
+    delete[](charStr);
+    delete[](projectName);
     
 }
 

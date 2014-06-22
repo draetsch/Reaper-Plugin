@@ -8,8 +8,7 @@
 #ifndef __Reaper_Plugin__reaper__
 #define __Reaper_Plugin__reaper__
 
-#include <iostream>
-#include <vector>
+#include <string>
 
 #include "reaper_plugin.h"
 #include "sws_rpf_wrapper.h"

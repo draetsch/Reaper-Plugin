@@ -5,15 +5,18 @@
 //  Created by Daniel Lindenfelser on 21.06.14.
 //
 
+#define REAPERAPI_DECL
+#include "reaper.h"
+#undef REAPERAPI_DECL
+
 #ifdef _WIN32
 #include <windows.h>
 #else
 #include "WDL/swell/swell.h"
 #endif
 
-#define REAPERAPI_DECL
-#include "reaper.h"
-#undef REAPERAPI_DECL
+#include <iostream>
+#include <vector>
 
 #include "Chapter.h"
 #include "Shownote.h"

@@ -9,8 +9,12 @@
 #ifndef reaper_Ultraschall_Chapter_functions_h
 #define reaper_Ultraschall_Chapter_functions_h
 
-#include "reaper.h"
 #include <fstream>
+#include <vector>
+
+#include "Chapter.h"
+
+#include "reaper.h"
 #include "tinyxml2.h"
 
 void ExportChapters(COMMAND_T*)
@@ -61,8 +65,8 @@ void ExportChapters(COMMAND_T*)
     sprintf(buffer, "The file was saved in:\n%s", (chapterFilename + ".mp4chaps").c_str());
     ShowMessageBox(buffer, "Chapter file saved", 0);
     
-    free(charStr);
-    free(projectName);
+    delete[](charStr);
+    delete[](projectName);
     
 }
 
@@ -111,8 +115,8 @@ void ExportChaptersAsSimpleChapters(COMMAND_T*)
     sprintf(buffer, "The file was saved in:\n%s", chapterFilename.c_str());
     ShowMessageBox(buffer, "Chapter file saved", 0);
     
-    free(charStr);
-    free(projectName);
+    delete[](charStr);
+    delete[](projectName);
 }
 
 void readChapterFile(char* fileName, MediaTrack* track )
