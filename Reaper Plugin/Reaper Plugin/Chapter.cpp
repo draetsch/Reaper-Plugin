@@ -152,11 +152,11 @@ void readChapterFile(char* fileName, MediaTrack* track )
 
 void ImportChapters(COMMAND_T*)
 {
-    char* chapterTrackName = "Chapters";
+    char* chapterTrackName = (char*)"Chapters";
     
     auto path = BrowseForFiles("Select chapters file", NULL, NULL, false, "Chapter marker text-file (*.mp4chaps)\0*.mp4chaps\0Text file (*.txt)\0*.txt\0All Files (*.*)\0*.*\0");
     if(path) {
-        MediaTrack* track = getTrackByName("Chapters");
+        MediaTrack* track = getTrackByName((char*)"Chapters");
         if(!track)
         {
             InsertTrackAtIndex(0, true);

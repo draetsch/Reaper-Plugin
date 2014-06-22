@@ -29,7 +29,7 @@ void ExportShownotes(COMMAND_T*)
     
     
     
-    MediaTrack* track = getTrackByName("Shownotes");
+    MediaTrack* track = getTrackByName((char*)"Shownotes");
     char* charStr = new char[4096];
     
     if(!track)
@@ -214,11 +214,11 @@ void readShownoteFile(char* fileName, MediaTrack* track)
 
 void ImportShownotes(COMMAND_T*)
 {
-    char* shownoteTrackName = "Shownotes";
+    char* shownoteTrackName = (char*)"Shownotes";
     
     auto path = BrowseForFiles("Select chapters file", NULL, NULL, false, "OSF file (*.mp4chaps)\0*.osf\0Text file (*.txt)\0*.txt\0All Files (*.*)\0*.*\0");
     if(path) {
-        MediaTrack* track = getTrackByName("Shownotes");
+        MediaTrack* track = getTrackByName((char*)"Shownotes");
         if(!track)
         {
             InsertTrackAtIndex(0, true);
