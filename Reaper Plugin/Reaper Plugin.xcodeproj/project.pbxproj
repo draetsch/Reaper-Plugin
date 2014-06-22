@@ -53,6 +53,9 @@
 		28F0EF1219562C43003BF618 /* sws_rpf_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sws_rpf_wrapper.h; sourceTree = "<group>"; };
 		28F0EF1519565FA4003BF618 /* Chapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Chapter.h; sourceTree = "<group>"; };
 		28F0EF1619565FAE003BF618 /* Shownote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shownote.h; sourceTree = "<group>"; };
+		28F0EF281956FC41003BF618 /* swell-functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "swell-functions.h"; path = "../../External/WDL/WDL/swell/swell-functions.h"; sourceTree = "<group>"; };
+		28F0EF291956FC41003BF618 /* swell-types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "swell-types.h"; path = "../../External/WDL/WDL/swell/swell-types.h"; sourceTree = "<group>"; };
+		28F0EF2A1956FC41003BF618 /* swell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = swell.h; path = ../../External/WDL/WDL/swell/swell.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,7 +179,7 @@
 		28F0EEE019560735003BF618 /* WDL */ = {
 			isa = PBXGroup;
 			children = (
-				28F0EF0E19562B0E003BF618 /* swell-modstub.mm */,
+				28F0EF2E1956FC46003BF618 /* swell */,
 			);
 			name = WDL;
 			sourceTree = "<group>";
@@ -208,6 +211,17 @@
 				28F0EEF41956086D003BF618 /* Ultraschall Tests-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		28F0EF2E1956FC46003BF618 /* swell */ = {
+			isa = PBXGroup;
+			children = (
+				28F0EF281956FC41003BF618 /* swell-functions.h */,
+				28F0EF291956FC41003BF618 /* swell-types.h */,
+				28F0EF2A1956FC41003BF618 /* swell.h */,
+				28F0EF0E19562B0E003BF618 /* swell-modstub.mm */,
+			);
+			name = swell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
