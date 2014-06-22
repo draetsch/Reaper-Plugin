@@ -184,7 +184,7 @@ void ImportChapters(COMMAND_T*)
 static COMMAND_T g_commandTable[] =
 {
 	{ { DEFACCEL, "Ultraschall Load chapter" }, "ULTRASCHALL_CHAPTER_LOAD", ImportChapters, },
-	{ { DEFACCEL, "Ultraschall Export Simplechapters" }, "ULTRASCHALL_CHAPTER_EXPORT_SIMPLE", ExportChaptersAsSimpleChapters, },
+	//{ { DEFACCEL, "Ultraschall Export Simplechapters" }, "ULTRASCHALL_CHAPTER_EXPORT_SIMPLE", ExportChaptersAsSimpleChapters, },
 	{ { DEFACCEL, "Ultraschall Export chapters" }, "ULTRASCHALL_CHAPTER_EXPORT", ExportChapters, },
     { {}, LAST_COMMAND, }, // Denote end of table
 };
